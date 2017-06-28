@@ -16,6 +16,7 @@ namespace QQRobot
 
             }
 
+            // code: utf-8
             string evalForUTF8(string code)
             {
                 // Get the default Isolate created at startup.
@@ -33,14 +34,12 @@ namespace QQRobot
                 // Create a string containing the JavaScript source code.
                 Handle<String> source = String::NewFromUtf8(isolate, code.c_str());
 
+                TryCatch trycatch;
                 // Compile the source code.
                 Handle<Script> script = Script::Compile(source);
-                
-                TryCatch trycatch;
 
                 // Run the script to get the result.
                 Handle<Value> result = script->Run();
-
                 if (result.IsEmpty())
                 {
                     Local<Value> ex = trycatch.Exception();
@@ -50,7 +49,6 @@ namespace QQRobot
 
                 String::Utf8Value utf8(result);
                 return string(*utf8);
-
             }
         private:
             Isolate* isolate;

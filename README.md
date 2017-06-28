@@ -1,11 +1,21 @@
 # qq-robot
-基于酷Q Air，QQ多功能机器人。
+基于CQ Air，QQ多功能机器人。
 
 
 ### 目前支持:
-* 作为JS群内交互式环境，语法：`eval: <js-code>`，例如发送以下消息:
+* 执行JS程序，语法：`eval: <code>`，例如发送以下消息:
     ```js
     eval:
     function add(x, y) { return y == 0 ? x : add(x + 1, y - 1); };
     add(1, 10)
     ``` 
+
+* 黑名单操作  
+    ```scheme
+    !black add 1013644379
+    !black del 1013644379
+    !black clear
+    !black list
+    ```
+
+* 互@对方

@@ -18,7 +18,9 @@ namespace QQRobot
 
         string getContent()
         {
-            return atQQ == -1 ? content : "[CQ:at,qq=" + to_string(atQQ) + "] " + content;
+            if (atQQ == -1)
+                return content;
+            return "[CQ:at,qq=" + to_string(atQQ) + "] "+ content;
         }
 
         void setAtQQ(QQNumber qq)
@@ -45,6 +47,22 @@ namespace QQRobot
             }
 
             return "";
+        }
+
+
+        string atContent()
+        {
+            int i = content.find("[CQ:at,qq=");
+            if (i != string::npos)
+            {
+                int j = content.find("]");
+                if (j != string::npos)
+                    return content.substr(0, i) + content.substr(j + 1);
+            }
+            else
+            {
+                return content;
+            }
         }
     };
 }
