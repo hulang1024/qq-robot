@@ -23,7 +23,7 @@ namespace stringutil
     {
         int nwLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, NULL, 0);
 
-        wchar_t * pwBuf = new wchar_t[nwLen + 1];//一定要加1，不然会出现尾巴
+        wchar_t * pwBuf = new wchar_t[nwLen + 1];
         memset(pwBuf, 0, nwLen * 2 + 2);
 
         MultiByteToWideChar(CP_UTF8, 0, str.c_str(), str.length(), pwBuf, nwLen);
@@ -50,7 +50,7 @@ namespace stringutil
     {
         int nwLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
 
-        wchar_t * pwBuf = new wchar_t[nwLen + 1];//一定要加1，不然会出现尾巴
+        wchar_t * pwBuf = new wchar_t[nwLen + 1];
         ZeroMemory(pwBuf, nwLen * 2 + 2);
 
         ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.length(), pwBuf, nwLen);
@@ -75,12 +75,12 @@ namespace stringutil
 
     vector<std::string> split(std::string str, std::string pattern)
     {
-        std::string::size_type pos;
+        size_t pos;
         std::vector<std::string> result;
-        str += pattern;//扩展字符串以方便操作
-        int size = str.size();
+        str += pattern;
+        size_t size = str.size();
 
-        for (int i = 0; i<size; i++)
+        for (size_t i = 0; i<size; i++)
         {
             pos = str.find(pattern, i);
             if (pos<size)

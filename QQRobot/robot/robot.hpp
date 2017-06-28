@@ -30,7 +30,7 @@ namespace QQRobot
         {
             CQ_EVENT_RET returnResult = EVENT_IGNORE;
 
-            string fromContent = msg.atContent();
+            string fromContent = msg.getContent();
 
             // 回复
             msg.toGroupQQ = msg.fromGroupQQ;
@@ -44,16 +44,12 @@ namespace QQRobot
 
                 if ((index = fromContent.find("功能")) != string::npos)
                 {
-                    string info = "我的功能如下：\n";
-                    info += "  * 我可以执行JS程序，发送：eval: <code>`，例如:eval: 1+2。注意分号是英文的，分号后面可任意空白。\n";
-                    info += "  * 如果你@我，我也会@你。\n";
-                    info += " （注意：请不要写会导致我家（系统）异常的代码，当心小黑屋哦，在黑名单中意味着我会拒绝某些请求:D ）";
-                    msg.setContent(info);
+                    msg.setContent(functionInfo());
                 }
                 else
                 {
                     // echo
-                    msg.setContent(fromContent);
+                    msg.setContent(msg.atContent());
                 }
 
                 returnResult = EVENT_BLOCK;
@@ -86,8 +82,11 @@ namespace QQRobot
                         string code = fromContent.substr(index + 5);
                         // 消息中的某些字符被编码，例如'[和']'被分别转换成了&#91;和&#93;，因此在这里先做解码
                         code = toCode(code);
+						// 转换到Utf8
                         code = stringutil::string_To_UTF8(code);
+						// 执行代码，获取结果
                         string result = js.evalForUTF8(code);
+						// 转换到string
                         result = stringutil::UTF8_To_string(result);
                         msg.setContent(result != "" ? result : " "); //解决不支持发送空
                     }
@@ -100,7 +99,7 @@ namespace QQRobot
                     returnResult = EVENT_BLOCK;
                 }
             }
-            else if ((index = fromContent.find("!blacklist") == 0))
+            else if (fromContent.find("!blacklist") != string::npos)
             {
                 if (msg.fromQQ != 1013644379)
                 {
@@ -112,25 +111,25 @@ namespace QQRobot
                 vector<string> strs = stringutil::split(fromContent, " ");
                 if (strs.size() < 2)
                     goto RET;
-                string objStr = strs[1];
+                string operatorStr = strs[1];
 
-                if (objStr == "add" && strs.size() >= 3)
+                if (operatorStr == "add" && strs.size() >= 3)
                 {
-                    string argStr = strs[2];
+                    string argStr = GroupMessage::tryGetQQFromAtContent(strs[2]);
                     blacklist.addQQ(argStr);
                     msg.setContent(argStr + " 成功关进小黑屋");
                 }
-                if (objStr == "del" && strs.size() >= 3)
+                else if (operatorStr == "del" && strs.size() >= 3)
                 {
-                    string argStr = strs[2];
+                    string argStr = GroupMessage::tryGetQQFromAtContent(strs[2]);
                     blacklist.delQQ(argStr);
                     msg.setContent(argStr + " 成功从小黑屋释放");
                 }
-                if (objStr == "list")
+                else if (operatorStr == "list")
                 {
                     msg.setContent(blacklist.empty() ? "黑名单空" : "黑名单:\n" + blacklist.toMutilLineStr("  "));
                 }
-                if (objStr == "clear")
+                else if (operatorStr == "clear")
                 {
                     blacklist.clear();
                     msg.setContent("成功清空黑名单");
@@ -158,6 +157,15 @@ namespace QQRobot
             str = stringutil::replace_all(str, "&#93;", "]");
             return str;
         }
+
+		string functionInfo()
+		{
+			string info = "我的功能如下：\n";
+			info += "  * 我可以执行JS程序，发送：eval: <code>`，例如:eval: 1+2。注意分号是英文的，分号后面可任意空白。\n";
+			info += "  * 如果你@我，我也会@你。\n";
+			info += " （注意：请不要写会导致我家（系统）异常的代码，当心小黑屋哦，在黑名单中意味着我会拒绝某些请求:D ）";
+			return info;
+		}
 
 	};
 }

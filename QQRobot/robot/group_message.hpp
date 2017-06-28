@@ -49,6 +49,17 @@ namespace QQRobot
             return "";
         }
 
+		static string tryGetQQFromAtContent(string content)
+		{
+			int i = content.find("[CQ:at,qq=");
+			if (i != string::npos)
+			{
+				int j = content.find("]");
+				if (j != string::npos)
+					return content.substr(i + 10, j - i - 10);
+			}
+			return content;
+		}
 
         string atContent()
         {
@@ -59,10 +70,7 @@ namespace QQRobot
                 if (j != string::npos)
                     return content.substr(0, i) + content.substr(j + 1);
             }
-            else
-            {
-                return content;
-            }
+            return content;
         }
     };
 }
