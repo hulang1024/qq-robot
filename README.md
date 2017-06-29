@@ -9,7 +9,6 @@
     function add(x, y) { return y == 0 ? x : add(x + 1, y - 1); };
     add(1, 10)
     ``` 
-
 * 黑名单操作  
     ```scheme
     !black add 1013644379
@@ -17,9 +16,6 @@
     !black clear
     !black list
     ```
-
 * 互@对方
-
 * 机器人接收到的私聊消息自动转发给管理者
-
 * 管理者可以让机器人代发消息
