@@ -1,4 +1,4 @@
-#ifndef QQROBOT_GROUP_MESSAGE_H
+ï»¿#ifndef QQROBOT_GROUP_MESSAGE_H
 #define QQROBOT_GROUP_MESSAGE_H
 
 #include <string>
@@ -14,7 +14,7 @@ namespace QQRobot
     public:
         string groupQQ;
         string atQQ = "";
-        int type = 0; // 0=Èº£¬1=ÌÖÂÛ×é
+        int type = 0; // 0=ç¾¤ï¼Œ1=è®¨è®ºç»„
 
         string getContent()
         {

@@ -19,7 +19,6 @@ namespace QQRobot
             // code: utf-8
             string evalForUTF8(string code)
             {
-
                 isolate = Isolate::New();
                 isolate->Enter();
 
@@ -33,6 +32,7 @@ namespace QQRobot
                 Handle<String> source = String::NewFromUtf8(isolate, code.c_str());
 
                 TryCatch trycatch;
+
                 // ±‡“Î‘¥¬Î
                 Handle<Script> script = Script::Compile(source);
 
