@@ -236,14 +236,14 @@ namespace QQRobot
             return false;
         }
 
-		string functionInfo()
-		{
-			string info = "我的功能如下：\n";
-			info += "  * 我可以执行JS程序，发送：eval: <code>`，例如:eval: 1+2。注意分号是英文的，分号后面可任意空白。\n";
-			info += "  * 如果你@我，我也会@你。\n";
-			info += " （注意：请不要写会导致我家（系统）异常的代码，当心小黑屋哦，在黑名单中意味着我会拒绝某些请求:D ）";
-			return info;
-		}
+        string functionInfo()
+        {
+            string info = "我的功能如下：\n";
+            info += "  * 我可以执行JS程序，发送：eval: <code>`，例如:eval: 1+2。注意分号是英文的，分号后面可任意空白。\n";
+            info += "  * 如果你@我，我也会@你。\n";
+            info += " （注意：请不要写会导致我家（系统）异常的代码，当心小黑屋哦，在黑名单中意味着我会拒绝某些请求:D ）";
+            return info;
+        }
 
 
 	};
