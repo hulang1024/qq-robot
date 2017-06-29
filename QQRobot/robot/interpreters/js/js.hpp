@@ -19,26 +19,24 @@ namespace QQRobot
             // code: utf-8
             string evalForUTF8(string code)
             {
-                // Get the default Isolate created at startup.
+
                 isolate = Isolate::New();
                 isolate->Enter();
-                // Create a stack-allocated handle scope.
+
                 HandleScope handle_scope(isolate);
 
-                // Create a new context.
+                // 创建一个新上下文
                 Handle<Context> context = Context::New(isolate);
 
-                // Enter the context for compiling and running the hello world script.
                 Context::Scope context_scope(context);
 
-                // Create a string containing the JavaScript source code.
                 Handle<String> source = String::NewFromUtf8(isolate, code.c_str());
 
                 TryCatch trycatch;
-                // Compile the source code.
+                // 编译源码
                 Handle<Script> script = Script::Compile(source);
 
-                // Run the script to get the result.
+                // 运行
                 Handle<Value> result = script->Run();
                 if (result.IsEmpty())
                 {

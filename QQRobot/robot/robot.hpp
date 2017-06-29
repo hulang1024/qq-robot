@@ -138,11 +138,11 @@ namespace QQRobot
                             return EVENT_BLOCK;
                         }
                         code = toCode(code);
-						// 转换到Utf8
+                        // 转换到Utf8
                         code = stringutil::string_To_UTF8(code);
-						// 执行代码，获取结果
+                        // 执行代码，获取结果
                         string result = js.evalForUTF8(code);
-						// 转换到string
+                        // 转换到string
                         result = stringutil::UTF8_To_string(result);
                         toMsg.setContent(result != "" ? result : " "); //解决不支持发送空
                     }
@@ -246,5 +246,5 @@ namespace QQRobot
         }
 
 
-	};
+    };
 }
