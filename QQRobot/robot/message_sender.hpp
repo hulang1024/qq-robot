@@ -8,9 +8,14 @@ namespace QQRobot
     class MessageSender
     {
     public:
-        void sendMessageToGroup(GroupMessage msg)
+        void sendPrivateMessage(Message msg)
         {
-            CQ_sendGroupMsg(authCode, msg.toGroupQQ, msg.getContent().c_str());
+            CQ_sendPrivateMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
+        }
+
+        void sendGroupMessage(GroupMessage msg)
+        {
+            CQ_sendGroupMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
         }
 
         void setAuthCode(int authCode)

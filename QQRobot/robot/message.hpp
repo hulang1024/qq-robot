@@ -6,13 +6,20 @@ using namespace std;
 
 namespace QQRobot
 {
-    typedef int64_t QQNumber;
+    enum MessageSubType
+    {
+        FromFriend = 11,
+        FromOnline = 1,
+        FromGroup = 2,
+        FromDiscuss = 3
+    };
 
     class Message
     {
     public:
-        QQNumber fromQQ;	/* 来自QQ用户 */
-        QQNumber toQQ;		/* 目标QQ用户 */
+        string from;
+        string to;
+        MessageSubType subType;
 
         void setContent(string content) { this->content = content; }
         string getContent() { return content; }

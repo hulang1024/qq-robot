@@ -12,31 +12,30 @@ namespace QQRobot
     class GroupMessage : public Message
     {
     public:
-        QQNumber fromGroupQQ;   /* 当接收来组的消息时有值 */
-        QQNumber toGroupQQ;     /* 当发送到组的消息时有值 */
-        QQNumber atQQ = -1;
+        string groupQQ;
+        string atQQ = "";
 
         string getContent()
         {
-            if (atQQ == -1)
+            if (atQQ == "")
                 return content;
-            return "[CQ:at,qq=" + to_string(atQQ) + "] "+ content;
+            return "[CQ:at,qq=" + atQQ + "] "+ content;
         }
 
-        void setAtQQ(QQNumber qq)
+        void setAtQQ(string qq)
         {
             atQQ = qq;
         }
 
-        void delAtQQ(QQNumber qq)
+        void delAtQQ(string qq)
         {
             atQQ = -1;
         }
 
         string getAtQQ()
         {
-            if (atQQ != -1)
-                return to_string(atQQ);
+            if (atQQ != "")
+                return atQQ;
 
             int i = content.find("[CQ:at,qq=");
             if (i != string::npos)

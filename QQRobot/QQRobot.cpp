@@ -88,7 +88,10 @@ CQEVENT(int32_t, __eventDisable, 0)() {
 * subType 子类型，11/来自好友 1/来自在线状态 2/来自群 3/来自讨论组
 */
 CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t sendTime, int64_t fromQQ, const char *msg, int32_t font) {
-
+    QQRobot::Message pMsg;
+    pMsg.from = to_string(fromQQ);
+    pMsg.setContent(msg);
+    return robot.onPrivateMessage(pMsg);
 	return EVENT_IGNORE;
 }
 
@@ -98,8 +101,8 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t sendTime, int64
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
 	GroupMessage gpMsg;
-	gpMsg.fromGroupQQ = fromGroup;
-	gpMsg.fromQQ = fromQQ;
+	gpMsg.groupQQ = to_string(fromGroup);
+	gpMsg.from = to_string(fromQQ);
 	gpMsg.setContent(msg);
 	return robot.onGroupMessage(gpMsg);
 }
