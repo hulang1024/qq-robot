@@ -14,6 +14,7 @@ namespace QQRobot
     public:
         string groupQQ;
         string atQQ = "";
+        int type = 0; // 0=Èº£¬1=ÌÖÂÛ×é
 
         string getContent()
         {

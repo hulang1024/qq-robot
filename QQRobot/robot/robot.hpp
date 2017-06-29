@@ -85,6 +85,8 @@ namespace QQRobot
             string fromContent = fromMsg.getContent();
 
             GroupMessage toMsg;
+            toMsg.type = fromMsg.type;
+
             // »Ø¸´
             toMsg.to = fromMsg.groupQQ;
             int index;
@@ -204,6 +206,12 @@ namespace QQRobot
 
             RET:
             return EVENT_IGNORE;
+        }
+
+        CQ_EVENT_RET onDiscussMessage(GroupMessage fromMsg)
+        {
+            fromMsg.type = 1;
+            return onGroupMessage(fromMsg);
         }
 
     private:

@@ -15,8 +15,12 @@ namespace QQRobot
 
         void sendGroupMessage(GroupMessage msg)
         {
-            CQ_sendGroupMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
+            if(msg.type == 0)
+                CQ_sendGroupMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
+            else if(msg.type == 1)
+                CQ_sendDiscussMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
         }
+
 
         void setAuthCode(int authCode)
         {

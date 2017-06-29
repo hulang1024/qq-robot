@@ -107,6 +107,16 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t sendTime, int64_t
 	return robot.onGroupMessage(gpMsg);
 }
 
+/*
+* Type=4 讨论组消息
+*/
+CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t sendTime, int64_t fromDiscuss, int64_t fromQQ, const char *msg, int32_t font) {
+    GroupMessage gpMsg;
+    gpMsg.groupQQ = to_string(fromDiscuss);
+    gpMsg.from = to_string(fromQQ);
+    gpMsg.setContent(msg);
+    return robot.onDiscussMessage(gpMsg);
+}
 
 CQEVENT(int32_t, __menuA, 0)() {
 	MessageBoxA(NULL, "menuA", "" ,0);
