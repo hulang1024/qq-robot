@@ -92,7 +92,6 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t sendTime, int64
     pMsg.from = to_string(fromQQ);
     pMsg.setContent(msg);
     return robot.onPrivateMessage(pMsg);
-	return EVENT_IGNORE;
 }
 
 
