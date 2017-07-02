@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="cqp.h" />
     <ClInclude Include="curl.h" />
+    <ClInclude Include="scheme\scm.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="v8\include\v8-debug.h" />
@@ -177,6 +178,10 @@
   <ItemGroup>
     <None Include="..\..\..\cqsdk-vc\CQPdemo\io.github.hlpp.QQRobot.json" />
     <None Include="libcurl.dll" />
+    <None Include="scheme\libscm.dll" />
+    <None Include="scheme\petite.boot" />
+    <None Include="scheme\run.bat" />
+    <None Include="scheme\scheme.boot" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="CQP.lib" />

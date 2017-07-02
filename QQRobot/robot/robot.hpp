@@ -2,7 +2,8 @@
 #include "message.hpp"
 #include "message_sender.hpp"
 #include "osu_query/osu_query.hpp"
-#include "interpreters/js/js.hpp"
+#include "interpreters/js.hpp"
+#include "interpreters/scheme.hpp"
 #include "blacklist.hpp"
 #include "stringutil.hpp"
 #include <string.h>
@@ -125,11 +126,13 @@ namespace QQRobot
                     return EVENT_BLOCK;
                 }
 
+				string code = fromContent.substr(index + 5);
+				string result;
+
                 if (defaultEvalLanguage == "js")
                 {
                     try
                     {
-                        string code = fromContent.substr(index + 5);
                         // 消息中的某些字符被编码，例如'[和']'被分别转换成了&#91;和&#93;，因此在这里先做解码
                         // 检查是否恶意代码
                         if (isBadCode(code)) {
@@ -143,20 +146,27 @@ namespace QQRobot
                         // 转换到Utf8
                         code = stringutil::string_To_UTF8(code);
                         // 执行代码，获取结果
-                        string result = js.evalForUTF8(code);
+                        result = js.evalForUTF8(code);
                         // 转换到string
                         result = stringutil::UTF8_To_string(result);
-                        toMsg.setContent(result != "" ? result : " "); //解决不支持发送空
+						result = result != "" ? result : " "; //解决不支持发送空
+                        
                     }
                     catch (exception &e)
                     {
                         string info = "发生异常了:\n";
                         info += e.what();
-                        toMsg.setContent(info);
+						result = info;
                     }
-                    sender.sendGroupMessage(toMsg);
-                    return EVENT_BLOCK;
                 }
+				else if (defaultEvalLanguage == "scheme")
+				{
+					result = scheme.eval(code);
+				}
+
+				toMsg.setContent(result);
+				sender.sendGroupMessage(toMsg);
+				return EVENT_BLOCK;
             }
             else if (fromContent.find("!blacklist") != string::npos)
             {
@@ -196,6 +206,13 @@ namespace QQRobot
                 sender.sendGroupMessage(toMsg);
                 return EVENT_BLOCK;
             }
+			else if ((index = fromContent.find("!set-eval-lang")) != string::npos)
+			{
+				defaultEvalLanguage = fromContent.substr(index + 14 + 1);
+				toMsg.setContent("done");
+				sender.sendGroupMessage(toMsg);
+				return EVENT_BLOCK;
+			}
             else if(atMe)
             {
                 // echo
@@ -216,8 +233,9 @@ namespace QQRobot
 
     private:
         string qq;
-        string defaultEvalLanguage = "js";
+        string defaultEvalLanguage = "scheme";
         JS js;
+		Scheme scheme;
         BlackList blacklist;
         string masterQQ = "1013644379";
 

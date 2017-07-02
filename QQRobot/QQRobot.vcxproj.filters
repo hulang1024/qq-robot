@@ -54,6 +54,9 @@
     <ClInclude Include="v8\include\v8-util.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="scheme\scm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -71,6 +74,12 @@
     <None Include="..\..\..\cqsdk-vc\CQPdemo\io.github.hlpp.QQRobot.json">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="scheme\libscm.dll" />
+    <None Include="scheme\petite.boot" />
+    <None Include="scheme\run.bat">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="scheme\scheme.boot" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="CQP.lib" />
