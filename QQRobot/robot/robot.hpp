@@ -126,8 +126,8 @@ namespace QQRobot
                     return EVENT_BLOCK;
                 }
 
-				string code = fromContent.substr(index + 5);
-				string result;
+                string code = fromContent.substr(index + 5);
+                string result;
 
                 if (defaultEvalLanguage == "js")
                 {
@@ -156,17 +156,17 @@ namespace QQRobot
                     {
                         string info = "发生异常了:\n";
                         info += e.what();
-						result = info;
+                        result = info;
                     }
                 }
-				else if (defaultEvalLanguage == "scheme")
-				{
-					result = scheme.eval(code);
-				}
+                else if (defaultEvalLanguage == "scheme")
+                {
+                    result = scheme.eval(code);
+                }
 
-				toMsg.setContent(result);
-				sender.sendGroupMessage(toMsg);
-				return EVENT_BLOCK;
+                toMsg.setContent(result);
+                sender.sendGroupMessage(toMsg);
+                return EVENT_BLOCK;
             }
             else if (fromContent.find("!blacklist") != string::npos)
             {
@@ -206,13 +206,13 @@ namespace QQRobot
                 sender.sendGroupMessage(toMsg);
                 return EVENT_BLOCK;
             }
-			else if ((index = fromContent.find("!set-eval-lang")) != string::npos)
-			{
-				defaultEvalLanguage = fromContent.substr(index + 14 + 1);
-				toMsg.setContent("done");
-				sender.sendGroupMessage(toMsg);
-				return EVENT_BLOCK;
-			}
+            else if ((index = fromContent.find("!set-eval-lang")) != string::npos)
+            {
+                defaultEvalLanguage = fromContent.substr(index + 14 + 1);
+                toMsg.setContent("done");
+                sender.sendGroupMessage(toMsg);
+                return EVENT_BLOCK;
+            }
             else if(atMe)
             {
                 // echo
@@ -233,7 +233,7 @@ namespace QQRobot
 
     private:
         string qq;
-        string defaultEvalLanguage = "scheme";
+        string defaultEvalLanguage = "js";
         JS js;
 		Scheme scheme;
         BlackList blacklist;
