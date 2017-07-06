@@ -21,3 +21,7 @@
     !sendtogroup 群号 [可选的QQ号] 消息
     !send QQ号 消息
     ```
+* osu!查询
+    ```scheme
+    !stat <username>
+    ```

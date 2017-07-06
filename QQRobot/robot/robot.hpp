@@ -109,10 +109,8 @@ namespace QQRobot
 
             if (fromContent.find("!stat") == 0)
             {
-                //²éÑ¯
-                //wstring result = OsuQuery::query(fromContent);
-                //toMsg.setContent(result);
-                toMsg.setContent("ÔÝÎ´¿ª·¢");
+                string result = osuQuery.query(fromContent);
+                toMsg.setContent(result);
                 sender.sendGroupMessage(toMsg);
                 return EVENT_BLOCK;
             }
@@ -238,6 +236,7 @@ namespace QQRobot
 		Scheme scheme;
         BlackList blacklist;
         string masterQQ = "1013644379";
+        OsuQuery osuQuery;
 
         string toCode(string str)
         {

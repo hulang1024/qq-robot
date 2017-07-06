@@ -1,7 +1,11 @@
+#ifndef STRINGUTIL_H
+#define STRINGUTIL_H
+
 #include <string>
 #include <vector>
 #include <wchar.h>
 #include <windows.h>
+
 
 using namespace std;
 
@@ -93,3 +97,5 @@ namespace stringutil
         return result;
     }
 }
+
+#endif

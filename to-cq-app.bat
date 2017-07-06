@@ -1,2 +1,2 @@
 @echo off
-copy Debug\QQRobot.dll cq-app\io.github.hlpp.QQRobot.dll
+copy Release\QQRobot.dll cq-app\io.github.hlpp.QQRobot.dll

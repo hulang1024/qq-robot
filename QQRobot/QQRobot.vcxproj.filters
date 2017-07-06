@@ -57,6 +57,69 @@
     <ClInclude Include="scheme\scm.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="curl\curl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="curl\curlbuild.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="curl\curlrules.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="curl\curlver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="curl\easy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="curl\mprintf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="curl\multi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="curl\stdcheaders.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="curl\system.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="curl\typecheck-gcc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\allocator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\assertions.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\autolink.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\config.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\features.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\forwards.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\json.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\reader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\value.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\version.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="jsoncpp\writer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -80,9 +143,12 @@
       <Filter>源文件</Filter>
     </None>
     <None Include="scheme\scheme.boot" />
+    <None Include="curl\libcurl.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="CQP.lib" />
     <Library Include="v8\x86\v8.lib" />
+    <Library Include="curl\libcurl.lib" />
+    <Library Include="jsoncpp\lib_json.lib" />
   </ItemGroup>
 </Project>
