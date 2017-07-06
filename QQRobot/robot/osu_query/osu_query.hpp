@@ -89,13 +89,13 @@ namespace QQRobot
             zhchsMap["count_rank_ss"] = "SS个数";
             zhchsMap["count_rank_s"] = "S个数";
             zhchsMap["count_rank_a"] = "A个数";
-            zhchsMap["events"] = "事件";
+            //zhchsMap["events"] = "事件";
             zhchsMap["nodata"] = "无数据";
 
             string orderedDisplayKeys[] = {
                 "username", "country", "pp_rank", "pp_country_rank", "pp_raw", "accuracy",
                 "playcount", "ranked_score", "total_score", "level", "count300", "count300", "count100", "count50",
-                "count_rank_ss", "count_rank_s", "count_rank_a", "events" };
+                "count_rank_ss", "count_rank_s", "count_rank_a", /*"events"*/ };
 
             string resultStr;
             for (int i = 0, j = sizeof orderedDisplayKeys / sizeof(string); i < j; i++)
