@@ -65,17 +65,20 @@ namespace QQRobot
 
             if (!curlInited)
             {
+                curlInited = true;
                 code = curl_global_init(CURL_GLOBAL_DEFAULT);
-                if (code != CURLE_OK) {
-                    return "";
+                if (code != CURLE_OK)
+                {
+                    curlInited = false;
+                    pCurl = NULL;
+                    return "init failed";
                 }
-            }
-
-            if (pCurl == NULL)
-            {
-                pCurl = curl_easy_init();
-                if(pCurl == NULL)
-                    return "";
+                if (pCurl == NULL)
+                {
+                    pCurl = curl_easy_init();
+                    if(pCurl == NULL)
+                        return "init failed";
+                }
             }
 
             string body;
