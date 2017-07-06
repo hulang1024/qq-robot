@@ -17,9 +17,22 @@ namespace QQRobot
     public:
         MessageSender sender;
 
-        Robot() { }
+        Robot()
+        {
+            // 初始化命令手册信息
+            string statInfo;
+            statInfo = "查询osu!用户统计信息。\n";
+            statInfo = statInfo
+                + "!stat <用户名> *[模式]\n"
+                + "模式：0 = osu!/std, 1 = Taiko, 2 = CTB, 3 = osu!mania/mania"
+                + "，该参数是可选的，默认为0；可以填数字或相应英文名或英文名字母\n"
+                + "例如，查询ctb统计信息：!stat WubWoofWolf *c";
+            manInfoMap["stat"] = statInfo;
+        }
+
         Robot(MessageSender sender)
         {
+            Robot();
             this->sender = sender;
         }
 
@@ -107,12 +120,27 @@ namespace QQRobot
                 }
             }
 
-            if (fromContent.find("!stat") == 0)
+            if (fromContent.find("!man") != string::npos)
+            {
+                vector<string> strs = stringutil::split(fromContent, " ");
+                if (strs.size() > 1)
+                {
+                    string cmd = strs[1];
+                    toMsg.setContent(manInfoMap[cmd]);
+                    sender.sendGroupMessage(toMsg);
+                    return EVENT_BLOCK;
+                }
+
+            }
+            else if (fromContent.find("!stat") != string::npos)
             {
                 string result = osuQuery.query(fromContent);
-                toMsg.setContent(result);
-                sender.sendGroupMessage(toMsg);
-                return EVENT_BLOCK;
+                if (result.length() > 0)
+                {
+                    toMsg.setContent(result);
+                    sender.sendGroupMessage(toMsg);
+                    return EVENT_BLOCK;
+                }
             }
             else if((index = fromContent.find("eval:")) != string::npos)
             {
@@ -238,10 +266,13 @@ namespace QQRobot
         string masterQQ = "1013644379";
         OsuQuery osuQuery;
 
+        map<string, string> manInfoMap;
+
         string toCode(string str)
         {
             str = stringutil::replace_all(str, "&#91;", "[");
             str = stringutil::replace_all(str, "&#93;", "]");
+            str = stringutil::replace_all(str, "&amp;", "&");
             return str;
         }
 
@@ -264,12 +295,12 @@ namespace QQRobot
         string functionInfo()
         {
             string info = "我的功能如下：\n";
-            info += "  * 我可以执行JS程序，发送：eval: <code>`，例如:eval: 1+2。注意分号是英文的，分号后面可任意空白。\n";
+            info += "  * 我可以执行JS程序，发送：eval: <JS代码>`，例如：eval: 1+2。注意分号是英文的，分号后面可任意空白。\n";
             info += "  * 如果你@我，我也会@你。\n";
-            info += " （注意：请不要写会导致我家（系统）异常的代码，当心小黑屋哦，在黑名单中意味着我会拒绝某些请求:D ）";
+            info += "  * osu!查询: 1. !stat\n";
+            info += "  * 命令用法查询: !man <命令名>，例如：!man stat";
             return info;
         }
-
 
     };
 }
