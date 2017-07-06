@@ -24,7 +24,7 @@ namespace QQRobot
         string query(string text)
         {
             size_t uindex = text.find(" ");
-            size_t mindex = text.find_last_of(" *");
+            size_t mindex = text.find_last_of("*");
             if (uindex == string::npos)
                 return "";
 
@@ -34,7 +34,7 @@ namespace QQRobot
             if (mindex != string::npos)
             {
                 modearg = text.substr(mindex);
-                username = text.substr(uindex + 1, text.length() - modearg.length() - 5 - 1);
+                username = text.substr(uindex + 1, text.length() - modearg.length() - 5 - 1 - 1);
                 modearg = modearg.substr(1);
 
                 if (modearg == "0" || modearg == "1" || modearg == "2" || modearg == "3")
