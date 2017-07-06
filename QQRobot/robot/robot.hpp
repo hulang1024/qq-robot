@@ -134,6 +134,9 @@ namespace QQRobot
             }
             else if (fromContent.find("!stat") != string::npos)
             {
+                if (checkIsInBlackList(fromMsg, toMsg))
+                    return EVENT_BLOCK;
+
                 string result = osuQuery.query(fromContent);
                 if (result.length() > 0)
                 {
@@ -144,13 +147,8 @@ namespace QQRobot
             }
             else if((index = fromContent.find("eval:")) != string::npos)
             {
-                if (blacklist.exist(fromMsg.from) || blacklist.exist("all"))
-                {
-                    toMsg.setAtQQ(fromMsg.from);
-                    toMsg.setContent("你已经被关进小黑屋了:C");
-                    sender.sendGroupMessage(toMsg);
+                if (checkIsInBlackList(fromMsg, toMsg))
                     return EVENT_BLOCK;
-                }
 
                 string code = fromContent.substr(index + 5);
                 string result;
@@ -302,5 +300,16 @@ namespace QQRobot
             return info;
         }
 
+        bool checkIsInBlackList(GroupMessage fromMsg, GroupMessage toMsg)
+        {
+            if (blacklist.exist(fromMsg.from) || blacklist.exist("all"))
+            {
+                toMsg.setAtQQ(fromMsg.from);
+                toMsg.setContent("你已经被关进小黑屋了:C");
+                sender.sendGroupMessage(toMsg);
+                return true;
+            }
+            return false;
+        }
     };
 }
