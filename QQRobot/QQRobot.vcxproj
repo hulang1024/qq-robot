@@ -199,17 +199,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\cqsdk-vc\CQPdemo\io.github.hlpp.QQRobot.json" />
-    <None Include="curl\libcurl.dll" />
-    <None Include="libcurl.dll" />
-    <None Include="scheme\libscm.dll" />
     <None Include="scheme\petite.boot" />
-    <None Include="scheme\run.bat" />
     <None Include="scheme\scheme.boot" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="CQP.lib" />
     <Library Include="curl\libcurl.lib" />
     <Library Include="jsoncpp\lib_json.lib" />
+    <Library Include="scheme\libscm.lib" />
     <Library Include="v8\x86\v8.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

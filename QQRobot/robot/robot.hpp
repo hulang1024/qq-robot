@@ -173,8 +173,7 @@ namespace QQRobot
                         result = js.evalForUTF8(code);
                         // 转换到string
                         result = stringutil::UTF8_To_string(result);
-						result = result != "" ? result : " "; //解决不支持发送空
-                        
+                        result = result != "" ? result : " "; //解决不支持发送空
                     }
                     catch (exception &e)
                     {
@@ -259,7 +258,7 @@ namespace QQRobot
         string qq;
         string defaultEvalLanguage = "js";
         JS js;
-		Scheme scheme;
+        Scheme scheme;
         BlackList blacklist;
         string masterQQ = "1013644379";
         OsuQuery osuQuery;

@@ -133,22 +133,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="libcurl.dll" />
     <None Include="..\..\..\cqsdk-vc\CQPdemo\io.github.hlpp.QQRobot.json">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="scheme\libscm.dll" />
     <None Include="scheme\petite.boot" />
-    <None Include="scheme\run.bat">
-      <Filter>源文件</Filter>
-    </None>
     <None Include="scheme\scheme.boot" />
-    <None Include="curl\libcurl.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="CQP.lib" />
     <Library Include="v8\x86\v8.lib" />
     <Library Include="curl\libcurl.lib" />
     <Library Include="jsoncpp\lib_json.lib" />
+    <Library Include="scheme\libscm.lib" />
   </ItemGroup>
 </Project>
