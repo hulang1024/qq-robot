@@ -1,4 +1,4 @@
-#ifndef ROBOT_MESSAGE_H
+ï»¿#ifndef ROBOT_MESSAGE_H
 #define ROBOT_MESSAGE_H
 
 #include <string>
@@ -15,7 +15,7 @@ namespace QQRobot
         void setContent(string content) { this->content = content; }
         string getContent() { return content; }
     protected:
-        string content;		/* ÏûÏ¢ÄÚÈİ */
+        string content;		/* æ¶ˆæ¯å†…å®¹ */
     };
 }
 

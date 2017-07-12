@@ -14,6 +14,8 @@ using namespace Interpreters;
 
 namespace QQRobot
 {
+    class Robot;
+
     class Interpreter : public Function
     {
 

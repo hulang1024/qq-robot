@@ -10,9 +10,10 @@
 using namespace std;
 using namespace QQRobot;
 
-
 namespace QQRobot
 {
+    class Robot;
+
 	class OsuQuery : public Function
 	{
         //API DOC: https://github.com/ppy/osu-api/wiki

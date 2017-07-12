@@ -143,7 +143,7 @@ namespace QQRobot
                 func = (Function*)&man;
             else if (fromContent.find("!stat") != string::npos)
                 func = (Function*)&osuQuery;
-            else if((index = fromContent.find("eval:")) != string::npos)
+            else if(fromContent.find("eval:") != string::npos)
                 func = (Function*)&interpreter;
             else if (fromContent.find("!blacklist") != string::npos)
                 func = (Function*)&blacklist;

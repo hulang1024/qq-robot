@@ -10,6 +10,8 @@ using namespace QQRobot;
 
 namespace QQRobot
 {
+    class Robot;
+
     /*
     机器人功能抽象
     */

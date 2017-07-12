@@ -10,6 +10,8 @@ using namespace QQRobot;
 
 namespace QQRobot
 {
+    class Robot;
+
     class Manual : public Function
     {
     public:
