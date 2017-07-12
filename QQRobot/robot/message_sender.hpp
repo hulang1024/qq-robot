@@ -1,5 +1,5 @@
-/*
-·¢ËÍÏûÏ¢
+ï»¿/*
+å‘é€æ¶ˆæ¯
 author: hulang
 */
 #ifndef ROBOT_MESSAGE_SENDER_H

@@ -1,5 +1,5 @@
 ﻿/*
-发送消息
+私聊消息
 author: hulang
 */
 #ifndef ROBOT_PRIVATE_MESSAGE_H
