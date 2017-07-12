@@ -24,100 +24,100 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="cqp.h">
+    <ClInclude Include="libs\cqp.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl.h">
+    <ClInclude Include="libs\curl.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="v8\include\v8.h">
+    <ClInclude Include="libs\v8\include\v8.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="v8\include\v8config.h">
+    <ClInclude Include="libs\v8\include\v8config.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="v8\include\v8-debug.h">
+    <ClInclude Include="libs\v8\include\v8-debug.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="v8\include\v8-platform.h">
+    <ClInclude Include="libs\v8\include\v8-platform.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="v8\include\v8-profiler.h">
+    <ClInclude Include="libs\v8\include\v8-profiler.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="v8\include\v8stdint.h">
+    <ClInclude Include="libs\v8\include\v8stdint.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="v8\include\v8-testing.h">
+    <ClInclude Include="libs\v8\include\v8-testing.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="v8\include\v8-util.h">
+    <ClInclude Include="libs\v8\include\v8-util.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="scheme\scm.h">
+    <ClInclude Include="libs\scheme\scm.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl\curl.h">
+    <ClInclude Include="libs\curl\curl.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl\curlbuild.h">
+    <ClInclude Include="libs\curl\curlbuild.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl\curlrules.h">
+    <ClInclude Include="libs\curl\curlrules.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl\curlver.h">
+    <ClInclude Include="libs\curl\curlver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl\easy.h">
+    <ClInclude Include="libs\curl\easy.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl\mprintf.h">
+    <ClInclude Include="libs\curl\mprintf.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl\multi.h">
+    <ClInclude Include="libs\curl\multi.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl\stdcheaders.h">
+    <ClInclude Include="libs\curl\stdcheaders.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl\system.h">
+    <ClInclude Include="libs\curl\system.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="curl\typecheck-gcc.h">
+    <ClInclude Include="libs\curl\typecheck-gcc.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\allocator.h">
+    <ClInclude Include="libs\jsoncpp\allocator.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\assertions.h">
+    <ClInclude Include="libs\jsoncpp\assertions.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\autolink.h">
+    <ClInclude Include="libs\jsoncpp\autolink.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\config.h">
+    <ClInclude Include="libs\jsoncpp\config.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\features.h">
+    <ClInclude Include="libs\jsoncpp\features.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\forwards.h">
+    <ClInclude Include="libs\jsoncpp\forwards.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\json.h">
+    <ClInclude Include="libs\jsoncpp\json.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\reader.h">
+    <ClInclude Include="libs\jsoncpp\reader.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\value.h">
+    <ClInclude Include="libs\jsoncpp\value.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\version.h">
+    <ClInclude Include="libs\jsoncpp\version.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jsoncpp\writer.h">
+    <ClInclude Include="libs\jsoncpp\writer.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -140,10 +140,10 @@
     <None Include="scheme\scheme.boot" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="CQP.lib" />
-    <Library Include="v8\x86\v8.lib" />
-    <Library Include="curl\libcurl.lib" />
-    <Library Include="jsoncpp\lib_json.lib" />
-    <Library Include="scheme\libscm.lib" />
+    <Library Include="libs\CQP.lib" />
+    <Library Include="libs\v8\x86\v8.lib" />
+    <Library Include="libs\curl\libcurl.lib" />
+    <Library Include="libs\jsoncpp\lib_json.lib" />
+    <Library Include="libs\scheme\libscm.lib" />
   </ItemGroup>
 </Project>

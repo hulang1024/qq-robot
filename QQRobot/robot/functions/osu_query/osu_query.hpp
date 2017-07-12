@@ -1,28 +1,44 @@
+#ifndef OSU_QUERY_H
+#define OSU_QUERY_H
+
 #include <string>
-#include "../stringutil.hpp"
-#include "curl/curl.h"  
-#include "jsoncpp/json.h"
+#include "../../stringutil.hpp"
+#include "libs/curl/curl.h"  
+#include "libs/jsoncpp/json.h"
+#include "../function.hpp"
+
 using namespace std;
+using namespace QQRobot;
+
 
 namespace QQRobot
 {
-	class OsuQuery
+	class OsuQuery : public Function
 	{
         //API DOC: https://github.com/ppy/osu-api/wiki
         const string apikey = "8d81085d1374ea124c124283fe7612b7cb35dbd8";
 
 	public:
-        OsuQuery()
+        OsuQuery() {}
+        OsuQuery(MessageSender *sender, Robot *robot) : Function(sender, robot)
         {
         }
+
         ~OsuQuery()
         {
             curl_easy_cleanup(pCurl);
             curl_global_cleanup();
         }
 
-        string query(string text)
+        bool handleMessage(Message &fromMsg, Message &toMsg)
         {
+            return query(fromMsg, toMsg);
+        }
+
+    private:
+        bool query(Message &fromMsg, Message &toMsg)
+        {
+            string text = fromMsg.getContent();
             size_t uindex = text.find(" ");
             size_t mindex = text.find_last_of("*");
             if (uindex == string::npos)
@@ -57,7 +73,14 @@ namespace QQRobot
                 username = text.substr(uindex + 1);
             }
 
-            return stat(username, mode);
+            string result = stat(username, mode);
+            if (result.length() > 0)
+            {
+                toMsg.setContent(result);
+                sender->sendMessage(toMsg);
+                return true;
+            }
+            return false;
         }
 
         string stat(string username, int mode)
@@ -174,3 +197,5 @@ namespace QQRobot
         }
     };
 }
+
+#endif

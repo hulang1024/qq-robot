@@ -6,6 +6,7 @@ namespace QQRobot
 {
     namespace OsuQuery
     {
+        //TODO:
         class Request
         {
         public:

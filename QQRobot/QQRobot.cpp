@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "string.h"
-#include "cqp.h"
+#include "libs/cqp.h"
 #include "robot/robot.hpp"
 #include <string>
 #include <ctime>
@@ -33,8 +33,7 @@ CQEVENT(const char*, AppInfo, 0)() {
 */
 CQEVENT(int32_t, Initialize, 4)(int32_t AuthCode) {
 	messageSender.setAuthCode(AuthCode);
-    robot.sender = messageSender;
-    robot.setQQ("3381775672");
+    robot.sender = &messageSender;
 	return 0;
 }
 
@@ -88,7 +87,7 @@ CQEVENT(int32_t, __eventDisable, 0)() {
 * subType 子类型，11/来自好友 1/来自在线状态 2/来自群 3/来自讨论组
 */
 CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t sendTime, int64_t fromQQ, const char *msg, int32_t font) {
-    QQRobot::Message pMsg;
+    PrivateMessage pMsg;
     pMsg.from = to_string(fromQQ);
     pMsg.setContent(msg);
     return robot.onPrivateMessage(pMsg);

@@ -1,60 +1,63 @@
-#include "group_message.hpp"
-#include "message.hpp"
-#include "message_sender.hpp"
-#include "osu_query/osu_query.hpp"
-#include "interpreters/js.hpp"
-#include "interpreters/scheme.hpp"
-#include "blacklist.hpp"
-#include "stringutil.hpp"
-#include <string.h>
+#ifndef ROBOT_H
+#define ROBOT_H
 
-using namespace Interpreters;
+#include <string.h>
+#include "message.hpp"
+#include "private_message.hpp"
+#include "group_message.hpp"
+#include "message_sender.hpp"
+#include "stringutil.hpp"
+#include "functions/function.hpp"
+#include "functions/osu_query/osu_query.hpp"
+#include "functions/blacklist.hpp"
+#include "functions/manual.hpp"
+#include "functions/interpreter.hpp"
+
+using namespace QQRobot;
 
 namespace QQRobot
 {
     class Robot
     {
     public:
-        MessageSender sender;
+        string qq;
+        string masterQQ;
+
+        BlackList blacklist;
+        OsuQuery osuQuery;
+        Interpreter interpreter;
+        Manual man;
+
+        MessageSender *sender;
 
         Robot()
         {
-            // 初始化命令手册信息
-            string statInfo;
-            statInfo = "查询osu!用户统计信息。\n";
-            statInfo = statInfo
-                + "!stat <用户名> *[模式]\n"
-                + "模式：0 = osu!/std, 1 = Taiko, 2 = CTB, 3 = osu!mania/mania"
-                + "，该参数是可选的，默认为0；可以填数字或相应英文名或英文名字母\n"
-                + "例如，查询ctb统计信息：!stat WubWoofWolf *c";
-            manInfoMap["stat"] = statInfo;
+            qq = "3381775672";
+            masterQQ = "1013644379";
         }
 
-        Robot(MessageSender sender)
+        Robot(MessageSender *sender)
         {
             Robot();
             this->sender = sender;
         }
 
-        void setQQ(string qq)
-        {
-            this->qq = qq;
-        }
-
-        CQ_EVENT_RET onPrivateMessage(Message fromMsg)
+        CQ_EVENT_RET onPrivateMessage(PrivateMessage fromMsg)
         {
             string fromContent = fromMsg.getContent();
 
-            Message toMsg;
+            PrivateMessage toMsg;
 
             // 如果消息不是来自主人，就把该消息转发给主人
             if (fromMsg.from != masterQQ)
             {
                 toMsg.to = masterQQ;
                 toMsg.setContent("QQ" + fromMsg.from + "消息: " + fromContent);
-                sender.sendPrivateMessage(toMsg);
+                sender->sendPrivateMessage(toMsg);
                 return EVENT_BLOCK;
             }
+
+            Function *func = NULL;
 
             // 执行群组消息代发命令，语法:!sendtogroup 目标群号 [某人QQ号] 暂不支持空格的消息
             if (fromContent.find("!sendtogroup") == 0)
@@ -75,7 +78,7 @@ namespace QQRobot
                 {
                     toGpMsg.setContent(strs[2]);
                 }
-                sender.sendGroupMessage(toGpMsg);
+                sender->sendGroupMessage(toGpMsg);
             }
             // 执行私聊消息代发命令，语法:!send 某人QQ号 暂不支持空格的消息
             else if (fromContent.find("!send") == 0)
@@ -85,10 +88,21 @@ namespace QQRobot
                     return EVENT_IGNORE;
 
                 vector<string> strs = stringutil::split(fromContent, " ");
-                GroupMessage toMsg;
+                PrivateMessage toMsg;
                 toMsg.to = strs[1];
                 toMsg.setContent(strs[2]);
-                sender.sendPrivateMessage(toMsg);
+                sender->sendPrivateMessage(toMsg);
+            }
+            else if (fromContent.find("!blacklist") != string::npos)
+                func = (Function*)&blacklist;
+
+            if (func != NULL)
+            {
+                func->sender = sender;
+                func->robot = this;
+                bool handleBlock = func->handleMessage(fromMsg, toMsg);
+                if (handleBlock)
+                    return EVENT_BLOCK;
             }
 
             return EVENT_IGNORE;
@@ -114,134 +128,40 @@ namespace QQRobot
 
                 if ((index = fromContent.find("功能")) != string::npos)
                 {
-                    toMsg.setContent(functionInfo());
-                    sender.sendGroupMessage(toMsg);
+                    toMsg.setContent(Function::functionInfo());
+                    sender->sendGroupMessage(toMsg);
                     return EVENT_BLOCK;
                 }
             }
+
+            if (checkIsInBlackList(fromMsg, toMsg))
+                return EVENT_BLOCK;
+
+            Function *func = NULL;
 
             if (fromContent.find("!man") != string::npos)
-            {
-                vector<string> strs = stringutil::split(fromContent, " ");
-                if (strs.size() > 1)
-                {
-                    string cmd = strs[1];
-                    toMsg.setContent(manInfoMap[cmd]);
-                    sender.sendGroupMessage(toMsg);
-                    return EVENT_BLOCK;
-                }
-
-            }
+                func = (Function*)&man;
             else if (fromContent.find("!stat") != string::npos)
-            {
-                if (checkIsInBlackList(fromMsg, toMsg))
-                    return EVENT_BLOCK;
-
-                string result = osuQuery.query(fromContent);
-                if (result.length() > 0)
-                {
-                    toMsg.setContent(result);
-                    sender.sendGroupMessage(toMsg);
-                    return EVENT_BLOCK;
-                }
-            }
+                func = (Function*)&osuQuery;
             else if((index = fromContent.find("eval:")) != string::npos)
-            {
-                if (checkIsInBlackList(fromMsg, toMsg))
-                    return EVENT_BLOCK;
-
-                string code = fromContent.substr(index + 5);
-                string result;
-
-                if (defaultEvalLanguage == "js")
-                {
-                    try
-                    {
-                        // 消息中的某些字符被编码，例如'[和']'被分别转换成了&#91;和&#93;，因此在这里先做解码
-                        // 检查是否恶意代码
-                        if (isBadCode(code)) {
-                            toMsg.setAtQQ(fromMsg.from);
-                            blacklist.addQQ(fromMsg.from);
-                            toMsg.setContent("你发的是恶意代码，你已经被关进小黑屋了！");
-                            sender.sendGroupMessage(toMsg);
-                            return EVENT_BLOCK;
-                        }
-                        code = toCode(code);
-                        // 转换到Utf8
-                        code = stringutil::string_To_UTF8(code);
-                        // 执行代码，获取结果
-                        result = js.evalForUTF8(code);
-                        // 转换到string
-                        result = stringutil::UTF8_To_string(result);
-                        result = result != "" ? result : " "; //解决不支持发送空
-                    }
-                    catch (exception &e)
-                    {
-                        string info = "发生异常了:\n";
-                        info += e.what();
-                        result = info;
-                    }
-                }
-                else if (defaultEvalLanguage == "scheme")
-                {
-                    result = scheme.eval(code);
-                }
-
-                toMsg.setContent(result);
-                sender.sendGroupMessage(toMsg);
-                return EVENT_BLOCK;
-            }
+                func = (Function*)&interpreter;
             else if (fromContent.find("!blacklist") != string::npos)
-            {
-                if (fromMsg.from != masterQQ)
-                {
-                    toMsg.setAtQQ(fromMsg.from);
-                    toMsg.setContent("无权限");
-                    sender.sendGroupMessage(toMsg);
-                    return EVENT_BLOCK;
-                }
-                vector<string> strs = stringutil::split(fromContent, " ");
-                if (strs.size() < 2)
-                    goto RET;
-                string operatorStr = strs[1];
-
-                if (operatorStr == "add" && strs.size() >= 3)
-                {
-                    string argStr = GroupMessage::tryGetQQFromAtContent(strs[2]);
-                    blacklist.addQQ(argStr);
-                    toMsg.setContent(argStr + " 成功关进小黑屋");
-                }
-                else if (operatorStr == "del" && strs.size() >= 3)
-                {
-                    string argStr = GroupMessage::tryGetQQFromAtContent(strs[2]);
-                    blacklist.delQQ(argStr);
-                    toMsg.setContent(argStr + " 成功从小黑屋释放");
-                }
-                else if (operatorStr == "list")
-                {
-                    toMsg.setContent(blacklist.empty() ? "黑名单空" : "黑名单:\n" + blacklist.toMutilLineStr(" "));
-                }
-                else if (operatorStr == "clear")
-                {
-                    blacklist.clear();
-                    toMsg.setContent("成功清空黑名单");
-                }
-                sender.sendGroupMessage(toMsg);
-                return EVENT_BLOCK;
-            }
-            else if ((index = fromContent.find("!set-eval-lang")) != string::npos)
-            {
-                defaultEvalLanguage = fromContent.substr(index + 14 + 1);
-                toMsg.setContent("done");
-                sender.sendGroupMessage(toMsg);
-                return EVENT_BLOCK;
-            }
+                func = (Function*)&blacklist;
             else if(atMe)
             {
                 // echo
                 toMsg.setContent(fromMsg.atContent());
-                sender.sendGroupMessage(toMsg);
+                sender->sendGroupMessage(toMsg);
                 return EVENT_BLOCK;
+            }
+
+            if (func != NULL)
+            {
+                func->sender = sender;
+                func->robot = this;
+                bool handleBlock = func->handleMessage(fromMsg, toMsg);
+                if (handleBlock)
+                    return EVENT_BLOCK;
             }
 
             RET:
@@ -255,60 +175,18 @@ namespace QQRobot
         }
 
     private:
-        string qq;
-        string defaultEvalLanguage = "js";
-        JS js;
-        Scheme scheme;
-        BlackList blacklist;
-        string masterQQ = "1013644379";
-        OsuQuery osuQuery;
-
-        map<string, string> manInfoMap;
-
-        string toCode(string str)
-        {
-            str = stringutil::replace_all(str, "&#91;", "[");
-            str = stringutil::replace_all(str, "&#93;", "]");
-            str = stringutil::replace_all(str, "&amp;", "&");
-            return str;
-        }
-
-        bool isBadCode(string code)
-        {
-            // 简单的恶意的
-            vector<string> badCodes;
-            badCodes.push_back("while(1)");
-            badCodes.push_back("while(!0)");
-            badCodes.push_back("while(true)");
-            badCodes.push_back("while(!false)");
-            badCodes.push_back("for(;;)");
-
-            for (vector<string>::iterator it = badCodes.begin(); it != badCodes.end(); it++)
-                if (code.find(*it) != string::npos)
-                    return true;
-            return false;
-        }
-
-        string functionInfo()
-        {
-            string info = "我的功能如下：\n";
-            info += "  * 我可以执行JS程序，发送：eval: <JS代码>`，例如：eval: 1+2。注意分号是英文的，分号后面可任意空白。\n";
-            info += "  * 如果你@我，我也会@你。\n";
-            info += "  * osu!查询: 1. !stat\n";
-            info += "  * 命令用法查询: !man <命令名>，例如：!man stat";
-            return info;
-        }
-
-        bool checkIsInBlackList(GroupMessage fromMsg, GroupMessage toMsg)
+        bool checkIsInBlackList(GroupMessage &fromMsg, GroupMessage &toMsg)
         {
             if (blacklist.exist(fromMsg.from) || blacklist.exist("all"))
             {
                 toMsg.setAtQQ(fromMsg.from);
                 toMsg.setContent("你已经被关进小黑屋了:C");
-                sender.sendGroupMessage(toMsg);
+                sender->sendGroupMessage(toMsg);
                 return true;
             }
             return false;
         }
     };
 }
+
+#endif

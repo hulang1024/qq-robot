@@ -1,5 +1,5 @@
-﻿#ifndef QQROBOT_GROUP_MESSAGE_H
-#define QQROBOT_GROUP_MESSAGE_H
+﻿#ifndef ROBOT_GROUP_MESSAGE_H
+#define ROBOT_GROUP_MESSAGE_H
 
 #include <string>
 #include "message.hpp"

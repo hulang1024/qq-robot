@@ -1,6 +1,6 @@
 #include <string>
 #include <stdlib.h>
-#include "scheme/scm.h"
+#include "libs/scheme/scm.h"
 
 using namespace std;
 
