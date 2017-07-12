@@ -1,17 +1,22 @@
+/*
+黑名单功能
+author: hulang
+*/
 #ifndef ROBOT_BLACKLIST_H
 #define ROBOT_BLACKLIST_H
 
 #include <string>
 #include <map>
+#include <vector>
+#include "../stringutil.hpp"
 #include "function.hpp"
+#include "../robot.h"
 
 using namespace std;
 using namespace QQRobot;
 
 namespace QQRobot
 {
-    class Robot;
-
     class BlackList : public Function
     {
     public:

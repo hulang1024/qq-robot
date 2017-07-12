@@ -1,10 +1,10 @@
 // QQRobot.cpp : 定义 DLL 应用程序的导出函数。
-//
+// author: hulang
 
 #include "stdafx.h"
 #include "string.h"
 #include "libs/cqp.h"
-#include "robot/robot.hpp"
+#include "robot/robot.h"
 #include <string>
 #include <ctime>
 

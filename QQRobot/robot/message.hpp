@@ -1,4 +1,8 @@
-﻿#ifndef ROBOT_MESSAGE_H
+﻿/*
+消息
+author: hulang
+*/
+#ifndef ROBOT_MESSAGE_H
 #define ROBOT_MESSAGE_H
 
 #include <string>

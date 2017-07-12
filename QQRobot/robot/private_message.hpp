@@ -1,3 +1,7 @@
+/*
+к╫адоШо╒
+author: hulang
+*/
 #ifndef ROBOT_PRIVATE_MESSAGE_H
 #define ROBOT_PRIVATE_MESSAGE_H
 

@@ -1,4 +1,8 @@
-﻿#ifndef ROBOT_GROUP_MESSAGE_H
+﻿/*
+群/讨论组消息
+author: hulang
+*/
+#ifndef ROBOT_GROUP_MESSAGE_H
 #define ROBOT_GROUP_MESSAGE_H
 
 #include <string>

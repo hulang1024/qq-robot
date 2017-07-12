@@ -117,7 +117,7 @@
     <ClInclude Include="libs\jsoncpp\version.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="libs\jsoncpp\writer.h">
+    <ClInclude Include="jlibs\soncpp\writer.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -131,13 +131,14 @@
     <ClCompile Include="QQRobot.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="robot\robot.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\cqsdk-vc\CQPdemo\io.github.hlpp.QQRobot.json">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="scheme\petite.boot" />
-    <None Include="scheme\scheme.boot" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="libs\CQP.lib" />

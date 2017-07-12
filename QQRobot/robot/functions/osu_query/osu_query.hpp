@@ -1,10 +1,14 @@
+/*
+osu!²éÑ¯¹¦ÄÜ
+author: hulang
+*/
 #ifndef OSU_QUERY_H
 #define OSU_QUERY_H
 
 #include <string>
 #include "../../stringutil.hpp"
-#include "libs/curl/curl.h"  
-#include "libs/jsoncpp/json.h"
+#include "../libs/curl/curl.h"  
+#include "../libs/jsoncpp/json.h"
 #include "../function.hpp"
 
 using namespace std;
@@ -12,8 +16,6 @@ using namespace QQRobot;
 
 namespace QQRobot
 {
-    class Robot;
-
 	class OsuQuery : public Function
 	{
         //API DOC: https://github.com/ppy/osu-api/wiki

@@ -1,3 +1,7 @@
+/*
+·¢ËÍÏûÏ¢
+author: hulang
+*/
 #ifndef ROBOT_MESSAGE_SENDER_H
 #define ROBOT_MESSAGE_SENDER_H
 
@@ -16,15 +20,15 @@ namespace QQRobot
     public:
         void sendPrivateMessage(PrivateMessage &msg)
         {
-            //CQ_sendPrivateMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
+            CQ_sendPrivateMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
         }
 
         void sendGroupMessage(GroupMessage &msg)
         {
             if (msg.type == 0)
-                1;// C Q_sendGroupMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
+                CQ_sendGroupMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
             else if (msg.type == 1)
-                2;// CQ_sendDiscussMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
+                CQ_sendDiscussMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
         }
 
         void sendMessage(Message &msg)

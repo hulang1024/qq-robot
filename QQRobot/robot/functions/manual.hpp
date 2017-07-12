@@ -1,3 +1,7 @@
+/*
+ÊÖ²á¹¦ÄÜ
+author: hulang
+*/
 #ifndef ROBOT_MANUAL_H
 #define ROBOT_MANUAL_H
 

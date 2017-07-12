@@ -1,3 +1,7 @@
+/*
+Scheme”Ô—‘Ω‚ Õ∆˜
+author: hulang
+*/
 #include <string>
 #include <stdlib.h>
 #include "libs/scheme/scm.h"

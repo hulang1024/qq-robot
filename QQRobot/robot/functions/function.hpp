@@ -1,15 +1,19 @@
+/*
+¹¦ÄÜ
+author: hulang
+*/
 #ifndef ROBOT_FUNCTION_H
 #define ROBOT_FUNCTION_H
 
 #include <string>
 #include "../message.hpp"
-#include "../message_sender.hpp"
 
 using namespace std;
 using namespace QQRobot;
 
 namespace QQRobot
 {
+    class MessageSender;
     class Robot;
 
     /*
