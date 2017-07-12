@@ -1,5 +1,5 @@
-/*
-×÷Îª±à³ÌÓïÑÔ½âÊÍÆ÷¹¦ÄÜ
+ï»¿/*
+ä½œä¸ºç¼–ç¨‹è¯­è¨€è§£é‡Šå™¨åŠŸèƒ½
 author: hulang
 */
 #ifndef ROBOT_INTERPRETER_H
@@ -18,8 +18,6 @@ using namespace Interpreters;
 
 namespace QQRobot
 {
-    class Robot;
-
     class Interpreter : public Function
     {
 
@@ -37,29 +35,29 @@ namespace QQRobot
             {
                 try
                 {
-                    // ÏûÏ¢ÖĞµÄÄ³Ğ©×Ö·û±»±àÂë£¬ÀıÈç'[ºÍ']'±»·Ö±ğ×ª»»³ÉÁË&#91;ºÍ&#93;£¬Òò´ËÔÚÕâÀïÏÈ×ö½âÂë
-                    // ¼ì²éÊÇ·ñ¶ñÒâ´úÂë
+                    // æ¶ˆæ¯ä¸­çš„æŸäº›å­—ç¬¦è¢«ç¼–ç ï¼Œä¾‹å¦‚'[å’Œ']'è¢«åˆ†åˆ«è½¬æ¢æˆäº†&#91;å’Œ&#93;ï¼Œå› æ­¤åœ¨è¿™é‡Œå…ˆåšè§£ç 
+                    // æ£€æŸ¥æ˜¯å¦æ¶æ„ä»£ç 
                     if (isBadCode(code))
                     {
                         if(typeid(fromMsg) == typeid(GroupMessage))
                             ((GroupMessage&)toMsg).setAtQQ(fromMsg.from);
-                        (robot->blacklist).addQQ(fromMsg.from);
-                        toMsg.setContent("Äã·¢µÄÊÇ¶ñÒâ´úÂë£¬ÄãÒÑ¾­±»¹Ø½øĞ¡ºÚÎİÁË£¡");
+                        robot->blacklist->addQQ(fromMsg.from);
+                        toMsg.setContent("ä½ å‘çš„æ˜¯æ¶æ„ä»£ç ï¼Œä½ å·²ç»è¢«å…³è¿›å°é»‘å±‹äº†ï¼");
                         sender->sendMessage(toMsg);
                         return EVENT_BLOCK;
                     }
                     code = toCode(code);
-                    // ×ª»»µ½Utf8
+                    // è½¬æ¢åˆ°Utf8
                     code = stringutil::string_To_UTF8(code);
-                    // Ö´ĞĞ´úÂë£¬»ñÈ¡½á¹û
+                    // æ‰§è¡Œä»£ç ï¼Œè·å–ç»“æœ
                     result = js.evalForUTF8(code);
-                    // ×ª»»µ½string
+                    // è½¬æ¢åˆ°string
                     result = stringutil::UTF8_To_string(result);
-                    result = result != "" ? result : " "; //½â¾ö²»Ö§³Ö·¢ËÍ¿Õ
+                    result = result != "" ? result : " "; //è§£å†³ä¸æ”¯æŒå‘é€ç©º
                 }
                 catch (exception &e)
                 {
-                    string info = "·¢ÉúÒì³£ÁË:\n";
+                    string info = "å‘ç”Ÿå¼‚å¸¸äº†:\n";
                     info += e.what();
                     result = info;
                 }
@@ -69,6 +67,7 @@ namespace QQRobot
                 result = scheme.eval(code);
             }
 
+            
             toMsg.setContent(result);
             sender->sendMessage(toMsg);
             return true;
@@ -80,7 +79,7 @@ namespace QQRobot
 
         bool isBadCode(string code)
         {
-            // ¼òµ¥µÄ¶ñÒâµÄ
+            // ç®€å•çš„æ¶æ„çš„
             vector<string> badCodes;
             badCodes.push_back("while(1)");
             badCodes.push_back("while(!0)");

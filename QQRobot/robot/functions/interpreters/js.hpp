@@ -1,5 +1,9 @@
+ï»¿/*
+JSè§£é‡Šå™¨
+author: hulang
+*/
 #include <string>
-#include "libs/v8/include/v8.h"
+#include "../../../libs/v8/include/v8.h"
 
 using namespace std;
 using namespace v8;
@@ -24,7 +28,7 @@ namespace QQRobot
 
                 HandleScope handle_scope(isolate);
 
-                // ´´½¨Ò»¸öĞÂÉÏÏÂÎÄ
+                // åˆ›å»ºä¸€ä¸ªæ–°ä¸Šä¸‹æ–‡
                 Handle<Context> context = Context::New(isolate);
 
                 Context::Scope context_scope(context);
@@ -33,10 +37,10 @@ namespace QQRobot
 
                 TryCatch trycatch;
 
-                // ±àÒëÔ´Âë
+                // ç¼–è¯‘æºç 
                 Handle<Script> script = Script::Compile(source);
 
-                // ÔËĞĞ
+                // è¿è¡Œ
                 Handle<Value> result = script->Run();
                 if (result.IsEmpty())
                 {

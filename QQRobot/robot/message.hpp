@@ -17,7 +17,7 @@ namespace QQRobot
         string to;
 
         void setContent(string content) { this->content = content; }
-        string getContent() { return content; }
+        virtual string getContent() { return content; }
     protected:
         string content;		/* 消息内容 */
     };

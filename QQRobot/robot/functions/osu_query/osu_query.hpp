@@ -1,5 +1,5 @@
-/*
-osu!²éÑ¯¹¦ÄÜ
+ï»¿/*
+osu!æŸ¥è¯¢åŠŸèƒ½
 author: hulang
 */
 #ifndef OSU_QUERY_H
@@ -109,7 +109,7 @@ namespace QQRobot
 
             string body;
             string params = "&u=" + username + "&m=" + to_string(mode) + "&type=string";
-            curl_easy_setopt(pCurl, CURLOPT_URL, "https://osu.ppy.sh/api/get_user?k=" + apikey + params);  // ·ÃÎÊµÄURL  
+            curl_easy_setopt(pCurl, CURLOPT_URL, "https://osu.ppy.sh/api/get_user?k=" + apikey + params);  // è®¿é—®çš„URL  
             curl_easy_setopt(pCurl, CURLOPT_TIMEOUT, 20);
             curl_easy_setopt(pCurl, CURLOPT_WRITEFUNCTION, &WriteFunction);
             curl_easy_setopt(pCurl, CURLOPT_WRITEDATA, &body);
@@ -129,7 +129,7 @@ namespace QQRobot
 
             if (body.length() < 3)
             {
-                return "Î´²éÑ¯µ½Êı¾İ";
+                return "æœªæŸ¥è¯¢åˆ°æ•°æ®";
             }
 
             Json::Value root;
@@ -137,31 +137,31 @@ namespace QQRobot
 
             bool succeed = reader.parse(body, root);
             if (!succeed)
-                return "Î´²éÑ¯µ½Êı¾İ";
+                return "æœªæŸ¥è¯¢åˆ°æ•°æ®";
 
             Json::Value user = root[0];
             Json::Value::Members members = user.getMemberNames();
 
             map<string, string> zhchsMap;
-            zhchsMap["username"] = "ÓÃ»§Ãû";
-            zhchsMap["country"] = "¹ú¼Ò";
-            zhchsMap["pp_rank"] = "PPÅÅÃû";
-            zhchsMap["pp_country_rank"] = "PP¹ú¼ÒÅÅÃû";
+            zhchsMap["username"] = "ç”¨æˆ·å";
+            zhchsMap["country"] = "å›½å®¶";
+            zhchsMap["pp_rank"] = "PPæ’å";
+            zhchsMap["pp_country_rank"] = "PPå›½å®¶æ’å";
             zhchsMap["pp_raw"] = "PP";
             zhchsMap["accuracy"] = "Acc";
             zhchsMap["playcount"] = "PC";
-            zhchsMap["ranked_score"] = "ÒÑÅÅÃû·ÖÊı";
-            zhchsMap["total_score"] = "×Ü·ÖÊı";
-            zhchsMap["level"] = "µ±Ç°µÈ¼¶";
-            zhchsMap["count300"] = "300Êı";
-            zhchsMap["count100"] = "100Êı";
-            zhchsMap["count50"] = "50Êı";
-            zhchsMap["count_rank_ss"] = "SSÊı";
-            zhchsMap["count_rank_s"] = "SÊı";
-            zhchsMap["count_rank_a"] = "AÊı";
-            //zhchsMap["events"] = "ÊÂ¼ş";
-            zhchsMap["nodata"] = "ÎŞÊı¾İ";
-            zhchsMap["mode"] = "Ä£Ê½";
+            zhchsMap["ranked_score"] = "å·²æ’ååˆ†æ•°";
+            zhchsMap["total_score"] = "æ€»åˆ†æ•°";
+            zhchsMap["level"] = "å½“å‰ç­‰çº§";
+            zhchsMap["count300"] = "300æ•°";
+            zhchsMap["count100"] = "100æ•°";
+            zhchsMap["count50"] = "50æ•°";
+            zhchsMap["count_rank_ss"] = "SSæ•°";
+            zhchsMap["count_rank_s"] = "Sæ•°";
+            zhchsMap["count_rank_a"] = "Aæ•°";
+            //zhchsMap["events"] = "äº‹ä»¶";
+            zhchsMap["nodata"] = "æ— æ•°æ®";
+            zhchsMap["mode"] = "æ¨¡å¼";
 
             string orderedDisplayKeys[] = {
                 "username", "country", "pp_rank", "pp_country_rank", "pp_raw", "accuracy",
@@ -170,15 +170,15 @@ namespace QQRobot
 
             string resultStr;
             string modeName[] = { "osu!", "Taiko", "CatchTheBeat", "osu!mania" };
-            resultStr += zhchsMap["mode"] + "£º " + modeName[mode] + "\n";
+            resultStr += zhchsMap["mode"] + "ï¼š " + modeName[mode] + "\n";
             for (int i = 0, j = sizeof orderedDisplayKeys / sizeof(string); i < j; i++)
             {
                 string key = orderedDisplayKeys[i];
                 if (zhchsMap.count(key) > 0)
                 {
                     Json::Value val = user[key];
-                    string displayVal = val.empty() ? zhchsMap["nodata"] : val.asString();//Ç°Ìá£ºvalÊÇ×Ö·û´®»ò¿ÕÊı×é
-                    resultStr += zhchsMap[key] + "£º " + displayVal + "\n";
+                    string displayVal = val.empty() ? zhchsMap["nodata"] : val.asString();//å‰æï¼švalæ˜¯å­—ç¬¦ä¸²æˆ–ç©ºæ•°ç»„
+                    resultStr += zhchsMap[key] + "ï¼š " + displayVal + "\n";
                 }
             }
 

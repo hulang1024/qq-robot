@@ -1,10 +1,10 @@
-/*
-SchemeÓïÑÔ½âÊÍÆ÷
+ï»¿/*
+Schemeè§£é‡Šå™¨
 author: hulang
 */
 #include <string>
 #include <stdlib.h>
-#include "libs/scheme/scm.h"
+#include "../../../libs/scheme/scm.h"
 
 using namespace std;
 

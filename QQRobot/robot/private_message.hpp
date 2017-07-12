@@ -1,5 +1,5 @@
-/*
-Ë½ÁÄÏûÏ¢
+ï»¿/*
+å‘é€æ¶ˆæ¯
 author: hulang
 */
 #ifndef ROBOT_PRIVATE_MESSAGE_H
@@ -25,6 +25,8 @@ namespace QQRobot
     {
     public:
         MessageSubType subType;
+
+        string getContent() { return content; }
     };
 }
 

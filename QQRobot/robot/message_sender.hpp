@@ -18,9 +18,14 @@ namespace QQRobot
     class MessageSender
     {
     public:
-        void sendPrivateMessage(PrivateMessage &msg)
+        void sendMessage(Message &msg)
         {
-            CQ_sendPrivateMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
+            const type_info& msgType = typeid(msg);
+
+            if (msgType == typeid(GroupMessage))
+                sendGroupMessage((GroupMessage&)msg);
+            else if (msgType == typeid(PrivateMessage))
+                sendPrivateMessage((PrivateMessage&)msg);
         }
 
         void sendGroupMessage(GroupMessage &msg)
@@ -31,13 +36,9 @@ namespace QQRobot
                 CQ_sendDiscussMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
         }
 
-        void sendMessage(Message &msg)
+        void sendPrivateMessage(PrivateMessage &msg)
         {
-            const type_info& type = typeid(msg);
-            if (type == typeid(GroupMessage))
-                sendGroupMessage((GroupMessage&)msg);
-            else if (type == typeid(GroupMessage))
-                sendPrivateMessage((PrivateMessage&)msg);
+            CQ_sendPrivateMsg(authCode, atoi(msg.to.c_str()), msg.getContent().c_str());
         }
 
         void setAuthCode(int authCode)

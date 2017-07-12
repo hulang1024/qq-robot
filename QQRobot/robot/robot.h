@@ -1,5 +1,5 @@
-/*
-»úÆ÷ÈË£¬¼àÌıÏûÏ¢ÊÂ¼ş
+ï»¿/*
+æœºå™¨äººï¼Œç›‘å¬æ¶ˆæ¯äº‹ä»¶
 author: hulang
 */
 #ifndef ROBOT_H
@@ -7,7 +7,6 @@ author: hulang
 
 #include <string.h>
 #include "../libs/cqp.h"
-#include "stringutil.hpp"
 #include "message.hpp"
 #include "private_message.hpp"
 #include "group_message.hpp"
@@ -26,7 +25,6 @@ namespace QQRobot
     class Robot
     {
     public:
-        
         string qq;
         string masterQQ;
 
@@ -39,10 +37,12 @@ namespace QQRobot
         
         Robot();
         Robot(MessageSender *sender);
+        ~Robot();
 
-        CQ_EVENT_RET onPrivateMessage(PrivateMessage fromMsg);
-        CQ_EVENT_RET onGroupMessage(GroupMessage fromMsg);
-        CQ_EVENT_RET onDiscussMessage(GroupMessage fromMsg);
+        CQ_EVENT_RET onPrivateMessage(PrivateMessage &fromMsg);
+        CQ_EVENT_RET onGroupMessage(GroupMessage &fromMsg);
+        CQ_EVENT_RET onDiscussMessage(GroupMessage &fromMsg);
+
     private:
         bool checkIsInBlackList(GroupMessage &fromMsg, GroupMessage &toMsg);
     };

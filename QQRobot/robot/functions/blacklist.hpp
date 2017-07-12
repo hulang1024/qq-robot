@@ -1,5 +1,5 @@
-/*
-ºÚÃûµ¥¹¦ÄÜ
+ï»¿/*
+é»‘åå•åŠŸèƒ½
 author: hulang
 */
 #ifndef ROBOT_BLACKLIST_H
@@ -10,7 +10,6 @@ author: hulang
 #include <vector>
 #include "../stringutil.hpp"
 #include "function.hpp"
-#include "../robot.h"
 
 using namespace std;
 using namespace QQRobot;
@@ -27,7 +26,7 @@ namespace QQRobot
         {
             if (fromMsg.from != robot->masterQQ)
             {
-                toMsg.setContent("ÎŞÈ¨ÏŞ");
+                toMsg.setContent("æ— æƒé™");
                 sender->sendMessage(toMsg);
                 return true;
             }
@@ -40,22 +39,22 @@ namespace QQRobot
             {
                 string argStr = GroupMessage::tryGetQQFromAtContent(strs[2]);
                 addQQ(argStr);
-                toMsg.setContent(argStr + " ³É¹¦¹Ø½øĞ¡ºÚÎİ");
+                toMsg.setContent(argStr + " æˆåŠŸå…³è¿›å°é»‘å±‹");
             }
             else if (operatorStr == "del" && strs.size() >= 3)
             {
                 string argStr = GroupMessage::tryGetQQFromAtContent(strs[2]);
                 delQQ(argStr);
-                toMsg.setContent(argStr + " ³É¹¦´ÓĞ¡ºÚÎİÊÍ·Å");
+                toMsg.setContent(argStr + " æˆåŠŸä»å°é»‘å±‹é‡Šæ”¾");
             }
             else if (operatorStr == "list")
             {
-                toMsg.setContent(empty() ? "ºÚÃûµ¥¿Õ" : "ºÚÃûµ¥:\n" + toMutilLineStr(" "));
+                toMsg.setContent(empty() ? "é»‘åå•ç©º" : "é»‘åå•:\n" + toMutilLineStr(" "));
             }
             else if (operatorStr == "clear")
             {
                 clear();
-                toMsg.setContent("³É¹¦Çå¿ÕºÚÃûµ¥");
+                toMsg.setContent("æˆåŠŸæ¸…ç©ºé»‘åå•");
             }
             sender->sendMessage(toMsg);
             return true;

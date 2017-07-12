@@ -1,8 +1,7 @@
-/*
-»úÆ÷ÈË£¬¼àÌıÏûÏ¢ÊÂ¼ş
+ï»¿/*
+æœºå™¨äººï¼Œç›‘å¬æ¶ˆæ¯äº‹ä»¶
 author: hulang
 */
-#include <string.h>
 #include "robot.h"
 #include "functions/function.hpp"
 #include "functions/osu_query/osu_query.hpp"
@@ -31,27 +30,36 @@ namespace QQRobot
         this->sender = sender;
     }
 
-    CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage fromMsg)
+    Robot::~Robot()
+    {
+        delete man;
+        delete osuQuery;
+        delete blacklist;
+        delete interpreter;
+    }
+
+    CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage &fromMsg)
     {
         string fromContent = fromMsg.getContent();
 
         PrivateMessage toMsg;
+        toMsg.to = fromMsg.from;
 
-        // Èç¹ûÏûÏ¢²»ÊÇÀ´×ÔÖ÷ÈË£¬¾Í°Ñ¸ÃÏûÏ¢×ª·¢¸øÖ÷ÈË
+        // å¦‚æœæ¶ˆæ¯ä¸æ˜¯æ¥è‡ªä¸»äººï¼Œå°±æŠŠè¯¥æ¶ˆæ¯è½¬å‘ç»™ä¸»äºº
         if (fromMsg.from != masterQQ)
         {
             toMsg.to = masterQQ;
-            toMsg.setContent("QQ" + fromMsg.from + "ÏûÏ¢: " + fromContent);
+            toMsg.setContent("QQ" + fromMsg.from + "æ¶ˆæ¯: " + fromContent);
             sender->sendPrivateMessage(toMsg);
             return EVENT_BLOCK;
         }
 
         Function *func = NULL;
 
-        // Ö´ĞĞÈº×éÏûÏ¢´ú·¢ÃüÁî£¬Óï·¨:!sendtogroup Ä¿±êÈººÅ [Ä³ÈËQQºÅ] Ôİ²»Ö§³Ö¿Õ¸ñµÄÏûÏ¢
+        // æ‰§è¡Œç¾¤ç»„æ¶ˆæ¯ä»£å‘å‘½ä»¤ï¼Œè¯­æ³•:!sendtogroup ç›®æ ‡ç¾¤å· [æŸäººQQå·] æš‚ä¸æ”¯æŒç©ºæ ¼çš„æ¶ˆæ¯
         if (fromContent.find("!sendtogroup") == 0)
         {
-            // Ö»ÓĞÖ÷ÈËÓĞ´ËÃüÁîÈ¨ÏŞ
+            // åªæœ‰ä¸»äººæœ‰æ­¤å‘½ä»¤æƒé™
             if (fromMsg.from != masterQQ)
                 return EVENT_IGNORE;
 
@@ -69,10 +77,10 @@ namespace QQRobot
             }
             sender->sendGroupMessage(toGpMsg);
         }
-        // Ö´ĞĞË½ÁÄÏûÏ¢´ú·¢ÃüÁî£¬Óï·¨:!send Ä³ÈËQQºÅ Ôİ²»Ö§³Ö¿Õ¸ñµÄÏûÏ¢
+        // æ‰§è¡Œç§èŠæ¶ˆæ¯ä»£å‘å‘½ä»¤ï¼Œè¯­æ³•:!send æŸäººQQå· æš‚ä¸æ”¯æŒç©ºæ ¼çš„æ¶ˆæ¯
         else if (fromContent.find("!send") == 0)
         {
-            // Ö»ÓĞÖ÷ÈËÓĞ´ËÃüÁîÈ¨ÏŞ
+            // åªæœ‰ä¸»äººæœ‰æ­¤å‘½ä»¤æƒé™
             if (fromMsg.from != masterQQ)
                 return EVENT_IGNORE;
 
@@ -83,7 +91,7 @@ namespace QQRobot
             sender->sendPrivateMessage(toMsg);
         }
         else if (fromContent.find("!blacklist") != string::npos)
-            func = (Function*)&blacklist;
+            func = (Function*)blacklist;
 
         if (func != NULL)
         {
@@ -97,25 +105,25 @@ namespace QQRobot
         return EVENT_IGNORE;
     }
 
-    CQ_EVENT_RET Robot::onGroupMessage(GroupMessage fromMsg)
+    CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
     {
         string fromContent = fromMsg.getContent();
 
         GroupMessage toMsg;
         toMsg.type = fromMsg.type;
 
-        // »Ø¸´
+        // å›å¤
         toMsg.to = fromMsg.groupQQ;
         int index;
 
-        // ×Ô¼º±»AT
+        // è‡ªå·±è¢«AT
         bool atMe = fromMsg.getAtQQ() == this->qq;
         if (atMe)
         {
-            //Ò²AT¶Ô·½
+            //ä¹ŸATå¯¹æ–¹
             toMsg.setAtQQ(fromMsg.from);
 
-            if ((index = fromContent.find("¹¦ÄÜ")) != string::npos)
+            if ((index = fromContent.find("åŠŸèƒ½")) != string::npos)
             {
                 toMsg.setContent(Function::functionInfo());
                 sender->sendGroupMessage(toMsg);
@@ -153,11 +161,10 @@ namespace QQRobot
                 return EVENT_BLOCK;
         }
 
-    RET:
         return EVENT_IGNORE;
     }
 
-    CQ_EVENT_RET Robot::onDiscussMessage(GroupMessage fromMsg)
+    CQ_EVENT_RET Robot::onDiscussMessage(GroupMessage &fromMsg)
     {
         fromMsg.type = 1;
         return onGroupMessage(fromMsg);
@@ -168,7 +175,7 @@ namespace QQRobot
         if (blacklist->exist(fromMsg.from) || blacklist->exist("all"))
         {
             toMsg.setAtQQ(fromMsg.from);
-            toMsg.setContent("ÄãÒÑ¾­±»¹Ø½øĞ¡ºÚÎİÁË:C");
+            toMsg.setContent("ä½ å·²ç»è¢«å…³è¿›å°é»‘å±‹äº†:C");
             sender->sendGroupMessage(toMsg);
             return true;
         }

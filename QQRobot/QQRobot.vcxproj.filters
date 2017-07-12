@@ -24,12 +24,6 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="libs\cqp.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="libs\curl.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="libs\v8\include\v8.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -117,7 +111,55 @@
     <ClInclude Include="libs\jsoncpp\version.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="jlibs\soncpp\writer.h">
+    <ClInclude Include="libs\jsoncpp\writer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\cqp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\curl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\robot.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\group_message.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\message.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\message_sender.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\private_message.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\stringutil.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\functions\blacklist.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\functions\function.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\functions\interpreter.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\functions\manual.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\functions\osu_query\osu_query.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\functions\osu_query\request.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\functions\interpreters\js.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\functions\interpreters\scheme.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -139,6 +181,8 @@
     <None Include="..\..\..\cqsdk-vc\CQPdemo\io.github.hlpp.QQRobot.json">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="scheme\petite.boot" />
+    <None Include="scheme\scheme.boot" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="libs\CQP.lib" />

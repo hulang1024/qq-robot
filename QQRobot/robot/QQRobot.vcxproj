@@ -133,7 +133,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;QQOSUROBOT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,54 +144,40 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="libs\cqp.h" />
-    <ClInclude Include="libs\curl.h" />
-    <ClInclude Include="libs\curl\curl.h" />
-    <ClInclude Include="libs\curl\curlbuild.h" />
-    <ClInclude Include="libs\curl\curlrules.h" />
-    <ClInclude Include="libs\curl\curlver.h" />
-    <ClInclude Include="libs\curl\easy.h" />
-    <ClInclude Include="libs\curl\mprintf.h" />
-    <ClInclude Include="libs\curl\multi.h" />
-    <ClInclude Include="libs\curl\stdcheaders.h" />
-    <ClInclude Include="libs\curl\system.h" />
-    <ClInclude Include="libs\curl\typecheck-gcc.h" />
-    <ClInclude Include="libs\jsoncpp\allocator.h" />
-    <ClInclude Include="libs\jsoncpp\assertions.h" />
-    <ClInclude Include="libs\jsoncpp\autolink.h" />
-    <ClInclude Include="libs\jsoncpp\config.h" />
-    <ClInclude Include="libs\jsoncpp\features.h" />
-    <ClInclude Include="libs\jsoncpp\forwards.h" />
-    <ClInclude Include="libs\jsoncpp\json.h" />
-    <ClInclude Include="libs\jsoncpp\reader.h" />
-    <ClInclude Include="libs\jsoncpp\value.h" />
-    <ClInclude Include="libs\jsoncpp\version.h" />
-    <ClInclude Include="libs\jsoncpp\writer.h" />
-    <ClInclude Include="libs\scheme\scm.h" />
-    <ClInclude Include="robot\functions\blacklist.hpp" />
-    <ClInclude Include="robot\functions\function.hpp" />
-    <ClInclude Include="robot\functions\interpreter.hpp" />
-    <ClInclude Include="robot\functions\interpreters\js.hpp" />
-    <ClInclude Include="robot\functions\interpreters\scheme.hpp" />
-    <ClInclude Include="robot\functions\manual.hpp" />
-    <ClInclude Include="robot\functions\osu_query\osu_query.hpp" />
-    <ClInclude Include="robot\functions\osu_query\request.hpp" />
-    <ClInclude Include="robot\group_message.hpp" />
-    <ClInclude Include="robot\message.hpp" />
-    <ClInclude Include="robot\message_sender.hpp" />
-    <ClInclude Include="robot\private_message.hpp" />
-    <ClInclude Include="robot\robot.h" />
-    <ClInclude Include="robot\stringutil.hpp" />
+    <ClInclude Include="cqp.h" />
+    <ClInclude Include="curl.h" />
+    <ClInclude Include="curl\curl.h" />
+    <ClInclude Include="curl\curlbuild.h" />
+    <ClInclude Include="curl\curlrules.h" />
+    <ClInclude Include="curl\curlver.h" />
+    <ClInclude Include="curl\easy.h" />
+    <ClInclude Include="curl\mprintf.h" />
+    <ClInclude Include="curl\multi.h" />
+    <ClInclude Include="curl\stdcheaders.h" />
+    <ClInclude Include="curl\system.h" />
+    <ClInclude Include="curl\typecheck-gcc.h" />
+    <ClInclude Include="jsoncpp\allocator.h" />
+    <ClInclude Include="jsoncpp\assertions.h" />
+    <ClInclude Include="jsoncpp\autolink.h" />
+    <ClInclude Include="jsoncpp\config.h" />
+    <ClInclude Include="jsoncpp\features.h" />
+    <ClInclude Include="jsoncpp\forwards.h" />
+    <ClInclude Include="jsoncpp\json.h" />
+    <ClInclude Include="jsoncpp\reader.h" />
+    <ClInclude Include="jsoncpp\value.h" />
+    <ClInclude Include="jsoncpp\version.h" />
+    <ClInclude Include="jsoncpp\writer.h" />
+    <ClInclude Include="scheme\scm.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="libs\v8\include\v8-debug.h" />
-    <ClInclude Include="libs\v8\include\v8-platform.h" />
-    <ClInclude Include="libs\v8\include\v8-profiler.h" />
-    <ClInclude Include="libs\v8\include\v8-testing.h" />
-    <ClInclude Include="libs\v8\include\v8-util.h" />
-    <ClInclude Include="libs\v8\include\v8.h" />
-    <ClInclude Include="libs\v8\include\v8config.h" />
-    <ClInclude Include="libs\v8\include\v8stdint.h" />
+    <ClInclude Include="v8\include\v8-debug.h" />
+    <ClInclude Include="v8\include\v8-platform.h" />
+    <ClInclude Include="v8\include\v8-profiler.h" />
+    <ClInclude Include="v8\include\v8-testing.h" />
+    <ClInclude Include="v8\include\v8-util.h" />
+    <ClInclude Include="v8\include\v8.h" />
+    <ClInclude Include="v8\include\v8config.h" />
+    <ClInclude Include="v8\include\v8stdint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -210,7 +195,6 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="QQRobot.cpp" />
-    <ClCompile Include="robot\robot.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -219,11 +203,11 @@
     <None Include="scheme\scheme.boot" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="libs\CQP.lib" />
-    <Library Include="libs\curl\libcurl.lib" />
-    <Library Include="libs\jsoncpp\lib_json.lib" />
-    <Library Include="libs\scheme\libscm.lib" />
-    <Library Include="libs\v8\x86\v8.lib" />
+    <Library Include="CQP.lib" />
+    <Library Include="curl\libcurl.lib" />
+    <Library Include="jsoncpp\lib_json.lib" />
+    <Library Include="scheme\libscm.lib" />
+    <Library Include="v8\x86\v8.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

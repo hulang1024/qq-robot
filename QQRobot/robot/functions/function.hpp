@@ -1,5 +1,5 @@
-/*
-¹¦ÄÜ
+ï»¿/*
+åŠŸèƒ½
 author: hulang
 */
 #ifndef ROBOT_FUNCTION_H
@@ -7,6 +7,7 @@ author: hulang
 
 #include <string>
 #include "../message.hpp"
+#include "../robot.h"
 
 using namespace std;
 using namespace QQRobot;
@@ -17,7 +18,7 @@ namespace QQRobot
     class Robot;
 
     /*
-    »úÆ÷ÈË¹¦ÄÜ³éÏó
+    æœºå™¨äººåŠŸèƒ½æŠ½è±¡
     */
     class Function
     {
@@ -33,18 +34,18 @@ namespace QQRobot
         }
 
         /*
-        ´¦ÀíÏûÏ¢
-        return: ÊÇ·ñ²»ºöÂÔ
+        å¤„ç†æ¶ˆæ¯
+        return: æ˜¯å¦ä¸å¿½ç•¥
         */
         virtual bool handleMessage(Message &fromMsg, Message &toMsg) = 0;
 
         static string functionInfo()
         {
-            string info = "ÎÒµÄ¹¦ÄÜÈçÏÂ£º\n";
-            info += "  * ÎÒ¿ÉÒÔÖ´ĞĞJS³ÌĞò£¬·¢ËÍ£ºeval: <JS´úÂë>`£¬ÀıÈç£ºeval: 1+2¡£×¢Òâ·ÖºÅÊÇÓ¢ÎÄµÄ£¬·ÖºÅºóÃæ¿ÉÈÎÒâ¿Õ°×¡£\n";
-            info += "  * Èç¹ûÄã@ÎÒ£¬ÎÒÒ²»á@Äã¡£\n";
-            info += "  * osu!²éÑ¯: 1. !stat\n";
-            info += "  * ÃüÁîÓÃ·¨²éÑ¯: !man <ÃüÁîÃû>£¬ÀıÈç£º!man stat";
+            string info = "æˆ‘çš„åŠŸèƒ½å¦‚ä¸‹ï¼š\n";
+            info += "  * æˆ‘å¯ä»¥æ‰§è¡ŒJSç¨‹åºï¼Œå‘é€ï¼ševal: <JSä»£ç >`ï¼Œä¾‹å¦‚ï¼ševal: 1+2ã€‚æ³¨æ„åˆ†å·æ˜¯è‹±æ–‡çš„ï¼Œåˆ†å·åé¢å¯ä»»æ„ç©ºç™½ã€‚\n";
+            info += "  * å¦‚æœä½ @æˆ‘ï¼Œæˆ‘ä¹Ÿä¼š@ä½ ã€‚\n";
+            info += "  * osu!æŸ¥è¯¢: 1. !stat\n";
+            info += "  * å‘½ä»¤ç”¨æ³•æŸ¥è¯¢: !man <å‘½ä»¤å>ï¼Œä¾‹å¦‚ï¼š!man stat";
             return info;
         }
     };

@@ -1,5 +1,5 @@
-/*
-ÊÖ²á¹¦ÄÜ
+ï»¿/*
+æ‰‹å†ŒåŠŸèƒ½
 author: hulang
 */
 #ifndef ROBOT_MANUAL_H
@@ -8,6 +8,7 @@ author: hulang
 #include <string>
 #include <map>
 #include "function.hpp"
+#include "../stringutil.hpp"
 
 using namespace std;
 using namespace QQRobot;
@@ -21,14 +22,14 @@ namespace QQRobot
     public:
         Manual()
         {
-            // ³õÊ¼»¯ÃüÁîÊÖ²áĞÅÏ¢
+            // åˆå§‹åŒ–å‘½ä»¤æ‰‹å†Œä¿¡æ¯
             string statInfo;
-            statInfo = "²éÑ¯osu!ÓÃ»§Í³¼ÆĞÅÏ¢¡£\n";
+            statInfo = "æŸ¥è¯¢osu!ç”¨æˆ·ç»Ÿè®¡ä¿¡æ¯ã€‚\n";
             statInfo = statInfo
-                + "!stat <ÓÃ»§Ãû> *[Ä£Ê½]\n"
-                + "Ä£Ê½£º0 = osu!/std, 1 = Taiko, 2 = CTB, 3 = osu!mania/mania"
-                + "£¬¸Ã²ÎÊıÊÇ¿ÉÑ¡µÄ£¬Ä¬ÈÏÎª0£»¿ÉÒÔÌîÊı×Ö»òÏàÓ¦Ó¢ÎÄÃû»òÓ¢ÎÄÃû×ÖÄ¸\n"
-                + "ÀıÈç£¬²éÑ¯ctbÍ³¼ÆĞÅÏ¢£º!stat WubWoofWolf *c";
+                + "!stat <ç”¨æˆ·å> *[æ¨¡å¼]\n"
+                + "æ¨¡å¼ï¼š0 = osu!/std, 1 = Taiko, 2 = CTB, 3 = osu!mania/mania"
+                + "ï¼Œè¯¥å‚æ•°æ˜¯å¯é€‰çš„ï¼Œé»˜è®¤ä¸º0ï¼›å¯ä»¥å¡«æ•°å­—æˆ–ç›¸åº”è‹±æ–‡åæˆ–è‹±æ–‡åå­—æ¯\n"
+                + "ä¾‹å¦‚ï¼ŒæŸ¥è¯¢ctbç»Ÿè®¡ä¿¡æ¯ï¼š!stat WubWoofWolf *c";
             manInfoMap["stat"] = statInfo;
         }
         Manual(MessageSender *sender, Robot *robot) : Function(sender, robot)
