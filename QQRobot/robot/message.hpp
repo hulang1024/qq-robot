@@ -23,10 +23,10 @@ namespace QQRobot
         string from;
         string to;
 
-        void setContent(string content) { this->content = stringutil::trim(content); }
+        void setContent(string content) { this->content = content; }
         virtual string getContent() { return content; }
     protected:
-        string content;		/* 消息内容 */
+        string content;
     };
 }
 

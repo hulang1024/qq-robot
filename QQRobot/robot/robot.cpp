@@ -42,6 +42,7 @@ Robot::~Robot()
 
 CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage &fromMsg)
 {
+    fromMsg.setContent(stringutil::trim(fromMsg.getContent()));
     string fromContent = fromMsg.getContent();
 
     PrivateMessage toMsg;
@@ -106,6 +107,7 @@ CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage &fromMsg)
 
 CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
 {
+    fromMsg.setContent(stringutil::trim(fromMsg.getContent()));
     string fromContent = fromMsg.getContent();
 
     GroupMessage toMsg;
@@ -156,7 +158,7 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
     else if (atMe)
     {
         // echo
-        string atContent = stringutil::trim(fromMsg.atContent());
+        string atContent = fromMsg.atContent();
         toMsg.setContent(atContent.length() > 0 ? atContent : "在下" + nickname + ", 有何贵干？请发送“功能”");
         sender->sendGroupMessage(toMsg);
         return EVENT_BLOCK;
