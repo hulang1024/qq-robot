@@ -16,12 +16,12 @@ using namespace QQRobot;
 
 namespace QQRobot
 {
-	class WeatherForecast : public Function
-	{
+    class WeatherForecast : public Function
+    {
         //API DOC: https://www.seniverse.com/doc
         const string apikey = "YK6GIIA0EB";
 
-	public:
+    public:
         WeatherForecast() {}
         WeatherForecast(Robot *robot) : Function(robot){ }
 

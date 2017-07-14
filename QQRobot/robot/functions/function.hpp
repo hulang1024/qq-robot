@@ -35,11 +35,15 @@ namespace QQRobot
 
         static string functionInfo()
         {
-            string info = "我的功能如下：\n";
-            info += "  * 我可以执行JS程序，发送：eval: <JS代码>`，例如：eval: 1+2。注意分号是英文的，分号后面可任意空白。\n";
-            info += "  * 如果你@我，我也会@你。\n";
-            info += "  * osu!查询: 1. !stat\n";
-            info += "  * 命令用法查询: !man <命令名>，例如：!man stat";
+            string info = "功能列表：\n";
+            info += "* 如果你@我，我也会@你。\n";
+            info += "* 执行JS程序：eval\n";
+            info += "* 天气预报: 天气\n";
+            info += "* osu!查询: !stat\n";
+            info += "* 黑名单: !black\n";
+            info += "* 代发消息: !send\n";
+            info += "* 代发消息到群: !sendtogroup\n";
+            info += "* 命令用法查询: !man <命令名>，例如：!man eval";
             return info;
         }
     };

@@ -90,7 +90,7 @@ CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage &fromMsg)
         toMsg.setContent(strs[2]);
         sender->sendPrivateMessage(toMsg);
     }
-    else if (fromContent.find("!blacklist") != string::npos)
+    else if (fromContent.find("!black") != string::npos)
         func = (Function*)blacklist;
 
     if (func != NULL)
@@ -138,7 +138,7 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
         func = (Function*)osuQuery;
     else if (fromContent.find("eval:") != string::npos)
         func = (Function*)interpreter;
-    else if (fromContent.find("!blacklist") != string::npos)
+    else if (fromContent.find("!black") != string::npos)
         func = (Function*)blacklist;
     else if (fromContent.find("天气") != string::npos)
         func = (Function*)weatherForecast;

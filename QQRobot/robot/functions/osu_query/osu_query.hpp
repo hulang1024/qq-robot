@@ -15,12 +15,12 @@ using namespace QQRobot;
 
 namespace QQRobot
 {
-	class OsuQuery : public Function
-	{
+    class OsuQuery : public Function
+    {
         //API DOC: https://github.com/ppy/osu-api/wiki
         const string apikey = "8d81085d1374ea124c124283fe7612b7cb35dbd8";
 
-	public:
+    public:
         OsuQuery() {}
         OsuQuery(Robot *robot) : Function(robot){ }
 
