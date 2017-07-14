@@ -58,14 +58,14 @@ namespace QQRobot
             Json::Value location = result["location"];
             Json::Value daily = result["daily"];
 
-            string resultString = code_msg_face(66) + location["name"].asString() + " " + to_string(daily.size()) + "天天气预报:\n";
-            
+            string resultString = location["name"].asString() + " " + to_string(daily.size()) + "天天气预报：\n";
+            char *dayNames[] = { "今天", "明天", "后天" };
             for (int i = 0, j = daily.size(); i < j; i++)
             {
                     Json::Value aday = daily[i];
                     char str[100];
                     sprintf_s(str, "%s 白天%s，晚间%s，气温最低%s最高%s℃，%s风（风速%skm/h，风速%s级）\n",//单位km/h（当unit=c时）
-                        (i > 0 ? aday["date"].asString().substr(5).c_str() : "今天 "),
+                        dayNames[i],
                         aday["text_day"].asCString(),
                         aday["text_night"].asCString(),
                         aday["low"].asCString(),

@@ -35,6 +35,7 @@ Robot::~Robot()
     delete man;
     delete osuQuery;
     delete blacklist;
+    delete weatherForecast;
     delete interpreter;
 }
 
@@ -56,8 +57,7 @@ CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage &fromMsg)
 
     Function *func = NULL;
 
-    // 执行群组消息代发命令，语法:!sendtogroup 目标群号 [某人QQ号] 暂不支持空格的消息
-    if (fromContent.find("!sendtogroup") == 0)
+    if (fromContent.find("sendtogroup") == 0)
     {
         // 只有主人有此命令权限
         if (fromMsg.from != masterQQ)
@@ -77,8 +77,7 @@ CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage &fromMsg)
         }
         sender->sendGroupMessage(toGpMsg);
     }
-    // 执行私聊消息代发命令，语法:!send 某人QQ号 暂不支持空格的消息
-    else if (fromContent.find("!send") == 0)
+    else if (fromContent.find("send") == 0)
     {
         // 只有主人有此命令权限
         if (fromMsg.from != masterQQ)
@@ -90,7 +89,7 @@ CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage &fromMsg)
         toMsg.setContent(strs[2]);
         sender->sendPrivateMessage(toMsg);
     }
-    else if (fromContent.find("!black") != string::npos)
+    else if (fromContent.find("black") != string::npos)
         func = (Function*)blacklist;
 
     if (func != NULL)
@@ -122,9 +121,20 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
         //也AT对方
         toMsg.setAtQQ(fromMsg.from);
 
-        if ((index = fromContent.find("功能")) != string::npos)
+        if ((index = fromContent.find("function")) != string::npos)
         {
-            toMsg.setContent(Function::functionInfo());
+            toMsg.setContent("\n" + Function::functionInfo());
+            sender->sendGroupMessage(toMsg);
+            return EVENT_BLOCK;
+        }
+
+        else if ((index = fromContent.find("about")) != string::npos)
+        {
+            string aboutinfo = "\n";
+            aboutinfo += "工程: https://github.com/hlpp/qq-robot/\n";
+            aboutinfo += "开发者们: problue(hlpp) .\n";
+            aboutinfo += code_msg_face(49) + "欢迎加入.\n";
+            toMsg.setContent(aboutinfo);
             sender->sendGroupMessage(toMsg);
             return EVENT_BLOCK;
         }
@@ -132,13 +142,13 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
 
     Function *func = NULL;
 
-    if (fromContent.find("!man") != string::npos)
+    if (fromContent.find("man") != string::npos)
         func = (Function*)man;
-    else if (fromContent.find("!stat") != string::npos)
+    else if (fromContent.find("stat") != string::npos)
         func = (Function*)osuQuery;
-    else if (fromContent.find("eval:") != string::npos)
+    else if (fromContent.find("eval") != string::npos)
         func = (Function*)interpreter;
-    else if (fromContent.find("!black") != string::npos)
+    else if (fromContent.find("black") != string::npos)
         func = (Function*)blacklist;
     else if (fromContent.find("天气") != string::npos)
         func = (Function*)weatherForecast;
