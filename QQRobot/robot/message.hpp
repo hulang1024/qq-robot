@@ -24,7 +24,7 @@ namespace QQRobot
         string to;
 
         void setContent(string content) { this->content = stringutil::trim(content); }
-        virtual string getContent() { return stringutil::trim(content); }
+        virtual string getContent() { return content; }
     protected:
         string content;		/* 消息内容 */
     };
