@@ -29,6 +29,7 @@ namespace QQRobot
     public:
         string qq;
         string masterQQ;
+        string nickname;
 
         // 功能s
         BlackList *blacklist;

@@ -5,7 +5,7 @@ author: hulang
 #ifndef ROBOT_PRIVATE_MESSAGE_H
 #define ROBOT_PRIVATE_MESSAGE_H
 
-#include <string>
+#include "utils/stringutil.h"
 #include "message.hpp"
 
 using namespace std;

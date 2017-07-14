@@ -24,19 +24,19 @@ namespace QQRobot
         OsuQuery() {}
         OsuQuery(Robot *robot) : Function(robot){ }
 
-        bool handleMessage(Message &fromMsg, Message &toMsg)
+        handle_message_code handleMessage(Message &fromMsg, Message &toMsg)
         {
             return query(fromMsg, toMsg);
         }
 
     private:
-        bool query(Message &fromMsg, Message &toMsg)
+        handle_message_code query(Message &fromMsg, Message &toMsg)
         {
             string text = fromMsg.getContent();
             size_t uindex = text.find(" ");
             size_t mindex = text.find_last_of("*");
             if (uindex == string::npos)
-                return "";
+                return handle_message_code::syntax_error;
 
             string username, modearg;
             int mode = 0;  // 0 = osu!/std, 1 = Taiko, 2 = CTB, 3 = mania
@@ -72,9 +72,9 @@ namespace QQRobot
             {
                 toMsg.setContent(result);
                 robot->sender->sendMessage(toMsg);
-                return true;
+                return handle_message_code::block;
             }
-            return false;
+            return handle_message_code::ignore;
         }
 
         string stat(string username, int mode)

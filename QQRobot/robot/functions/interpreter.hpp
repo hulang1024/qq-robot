@@ -25,7 +25,7 @@ namespace QQRobot
         Interpreter() {}
         Interpreter(Robot *robot) : Function(robot) {}
 
-        bool handleMessage(Message &fromMsg, Message &toMsg)
+        handle_message_code handleMessage(Message &fromMsg, Message &toMsg)
         {
             string content = fromMsg.getContent();
             string code = content.substr(content.find("eval:") + 5);
@@ -44,7 +44,7 @@ namespace QQRobot
                         robot->blacklist->addQQ(fromMsg.from);
                         toMsg.setContent("你发的是恶意代码，你已经被关进小黑屋了！");
                         robot->sender->sendMessage(toMsg);
-                        return EVENT_BLOCK;
+                        return handle_message_code::block;
                     }
                     code = toCode(code);
                     // 转换到Utf8
@@ -70,7 +70,7 @@ namespace QQRobot
             
             toMsg.setContent(result);
             robot->sender->sendMessage(toMsg);
-            return true;
+            return handle_message_code::block;
         }
     private:
         string evalLanguage = "js";

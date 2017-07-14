@@ -22,17 +22,17 @@ namespace QQRobot
         BlackList() {}
         BlackList(Robot *robot) : Function(robot) {}
 
-        bool handleMessage(Message &fromMsg, Message &toMsg)
+        handle_message_code handleMessage(Message &fromMsg, Message &toMsg)
         {
             if (fromMsg.from != robot->masterQQ)
             {
                 toMsg.setContent("无权限");
                 robot->sender->sendMessage(toMsg);
-                return true;
+                return handle_message_code::block;
             }
             vector<string> strs = stringutil::split(fromMsg.getContent(), " ");
             if (strs.size() < 2)
-                return false;
+                return handle_message_code::syntax_error;
             string operatorStr = strs[1];
 
             if (operatorStr == "add" && strs.size() >= 3)
@@ -56,8 +56,12 @@ namespace QQRobot
                 clear();
                 toMsg.setContent("成功清空黑名单");
             }
+            else
+            {
+                return handle_message_code::syntax_error;
+            }
             robot->sender->sendMessage(toMsg);
-            return true;
+            return handle_message_code::block;
         }
 
         void addQQ(string qq)

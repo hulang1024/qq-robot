@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <string.h>
+#include <ctype.h>
 #include <wchar.h>
 #include <windows.h>
 
@@ -10,6 +12,8 @@ using namespace std;
 
 namespace stringutil
 {
+    string trim(string s);
+
     string& replace_all(string& str, const string& old_value, const string& new_value);
 
     string UTF8_To_string(const string & str);

@@ -5,7 +5,7 @@ author: hulang
 #ifndef ROBOT_MESSAGE_H
 #define ROBOT_MESSAGE_H
 
-#include <string>
+#include "utils/stringutil.h"
 
 /// 消息中的代码
 #define code_msg_face(id) (string("[CQ:face,id=") + to_string(id) + "]")
@@ -23,8 +23,8 @@ namespace QQRobot
         string from;
         string to;
 
-        void setContent(string content) { this->content = content; }
-        virtual string getContent() { return content; }
+        void setContent(string content) { this->content = stringutil::trim(content); }
+        virtual string getContent() { return stringutil::trim(content); }
     protected:
         string content;		/* 消息内容 */
     };

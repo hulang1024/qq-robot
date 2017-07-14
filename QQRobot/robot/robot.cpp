@@ -14,6 +14,7 @@ using namespace QQRobot;
 
 Robot::Robot()
 {
+    nickname = "超蓝猫";
     qq = "3381775672";
     masterQQ = "1013644379";
 
@@ -112,7 +113,6 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
 
     // 回复
     toMsg.to = fromMsg.groupQQ;
-    int index;
 
     // 自己被AT
     bool atMe = fromMsg.getAtQQ() == this->qq;
@@ -121,16 +121,16 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
         //也AT对方
         toMsg.setAtQQ(fromMsg.from);
 
-        if ((index = fromContent.find("function")) != string::npos)
+        if (fromContent.find("function-list") != string::npos || fromContent.find("功能") != string::npos)
         {
             toMsg.setContent("\n" + Function::functionInfo());
             sender->sendGroupMessage(toMsg);
             return EVENT_BLOCK;
         }
 
-        else if ((index = fromContent.find("about")) != string::npos)
+        else if (fromContent.find("about") != string::npos || fromContent.find("关于") != string::npos)
         {
-            string aboutinfo = "\n";
+            string aboutinfo = "\n关于:";
             aboutinfo += "工程: https://github.com/hlpp/qq-robot/\n";
             aboutinfo += "开发者们: problue(hlpp) .\n";
             aboutinfo += code_msg_face(49) + "欢迎加入.\n";
@@ -140,13 +140,14 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
         }
     }
 
+
     Function *func = NULL;
 
-    if (fromContent.find("man") != string::npos)
+    if (fromContent.find("!man") != string::npos)
         func = (Function*)man;
-    else if (fromContent.find("stat") != string::npos)
+    else if (fromContent.find("!stat") != string::npos)
         func = (Function*)osuQuery;
-    else if (fromContent.find("eval") != string::npos)
+    else if (fromContent.find("eval:") != string::npos)
         func = (Function*)interpreter;
     else if (fromContent.find("black") != string::npos)
         func = (Function*)blacklist;
@@ -155,7 +156,8 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
     else if (atMe)
     {
         // echo
-        toMsg.setContent(fromMsg.atContent());
+        string atContent = stringutil::trim(fromMsg.atContent());
+        toMsg.setContent(atContent.length() > 0 ? atContent : "在下" + nickname + ", 有何贵干？请发送“功能”");
         sender->sendGroupMessage(toMsg);
         return EVENT_BLOCK;
     }
@@ -165,9 +167,16 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
         if (checkIsInBlackList(fromMsg, toMsg))
             return EVENT_BLOCK;
         func->robot = this;
-        bool handleBlock = func->handleMessage(fromMsg, toMsg);
-        if (handleBlock)
+        Function::handle_message_code retCode = func->handleMessage(fromMsg, toMsg);
+        switch (retCode)
+        {
+        case Function::handle_message_code::block:
             return EVENT_BLOCK;
+        case Function::handle_message_code::syntax_error:
+            toMsg.setContent(man->getInfo("man"));
+            sender->sendMessage(toMsg);
+            sender->sendGroupMessage(toMsg);
+        }
     }
 
     return EVENT_IGNORE;

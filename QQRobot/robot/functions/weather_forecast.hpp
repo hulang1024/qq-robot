@@ -25,26 +25,27 @@ namespace QQRobot
         WeatherForecast() {}
         WeatherForecast(Robot *robot) : Function(robot){ }
 
-        bool handleMessage(Message &fromMsg, Message &toMsg)
+        handle_message_code handleMessage(Message &fromMsg, Message &toMsg)
         {
             string text = fromMsg.getContent();
-            string resStr = queryDailyString(text);
+            size_t locIndex = text.find(" ");
+            if (locIndex == string::npos)
+                return handle_message_code::syntax_error;
+            string location = text.substr(locIndex + 1);
+
+            string resStr = queryDailyString(location);
             if (resStr.length() > 0)
             {
                 toMsg.setContent(resStr);
                 robot->sender->sendMessage(toMsg);
-                return true;
+                return handle_message_code::block;
             }
-            return false;
+            return handle_message_code::ignore;
         }
 
     private:
-        string queryDailyString(string text)
+        string queryDailyString(string slocation)
         {
-            size_t locIndex = text.find(" ");
-            if (locIndex == string::npos)
-                return "";
-            string slocation = text.substr(locIndex + 1);
             Json::Value result;
             int ret = get.setUrl("https://api.seniverse.com/v3/weather/daily.json")
                 .addParam("location", slocation)

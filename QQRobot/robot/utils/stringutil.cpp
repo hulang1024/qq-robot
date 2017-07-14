@@ -1,6 +1,19 @@
 #include "stringutil.h"
 namespace stringutil
 {
+    string trim(string s)
+    {
+        size_t len = s.length();
+        size_t si, ei;
+        size_t i;
+        for (i = 0; i < len && isspace(s[i]);) i++;
+        si = i;
+        for (i = len - 1; i >= 0 && isspace(s[i]);) i--;
+        ei = i;
+
+        return s.substr(si, ei + 1 - si);
+    }
+
     string& replace_all(string& str, const string& old_value, const string& new_value)
     {
         while (true) {
