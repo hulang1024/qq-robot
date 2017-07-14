@@ -3,7 +3,7 @@ JS解释器
 author: hulang
 */
 #include <string>
-#include "../../../libs/v8/include/v8.h"
+#include "libs/v8/include/v8.h"
 
 using namespace std;
 using namespace v8;

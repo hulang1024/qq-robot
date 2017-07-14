@@ -135,9 +135,6 @@
     <ClInclude Include="robot\private_message.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="robot\stringutil.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="robot\functions\blacklist.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -153,13 +150,22 @@
     <ClInclude Include="robot\functions\osu_query\osu_query.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="robot\functions\osu_query\request.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="robot\functions\interpreters\js.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="robot\functions\interpreters\scheme.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\utils\stringutil.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\functions\weather_forecast.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\utils\http\httpget.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\utils\stringutil.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -174,6 +180,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="robot\robot.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\utils\http\httpget.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="robot\utils\stringutil.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

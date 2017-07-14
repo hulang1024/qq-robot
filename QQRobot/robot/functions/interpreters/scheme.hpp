@@ -3,8 +3,7 @@ Scheme解释器
 author: hulang
 */
 #include <string>
-#include <stdlib.h>
-#include "../../../libs/scheme/scm.h"
+#include "libs/scheme/scm.h"
 
 using namespace std;
 
@@ -18,12 +17,12 @@ namespace QQRobot
 		public:
 			Scheme()
 			{
-				scm_init();
+				//scm_init();
 			}
 
 			~Scheme()
 			{
-				scm_deinit();
+				//scm_deinit();
 			}
 
 			string eval(string str)

@@ -24,7 +24,7 @@ namespace QQRobot
         {
             if (atQQ == "")
                 return content;
-            return "[CQ:at,qq=" + atQQ + "] "+ content;
+            return code_msg_at(atQQ) + content;
         }
 
         void setAtQQ(string qq)
@@ -34,7 +34,7 @@ namespace QQRobot
 
         void delAtQQ(string qq)
         {
-            atQQ = -1;
+            atQQ = "";
         }
 
         string getAtQQ()
@@ -63,7 +63,7 @@ namespace QQRobot
                     return content.substr(i + 10, j - i - 10);
             }
             return content;
-		}
+        }
 
         string atContent()
         {

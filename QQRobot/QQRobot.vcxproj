@@ -90,6 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_USRDLL;QQOSUROBOT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -102,6 +103,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;QQOSUROBOT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -117,6 +119,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;QQOSUROBOT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -134,6 +137,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;QQOSUROBOT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -176,13 +180,15 @@
     <ClInclude Include="robot\functions\interpreters\scheme.hpp" />
     <ClInclude Include="robot\functions\manual.hpp" />
     <ClInclude Include="robot\functions\osu_query\osu_query.hpp" />
-    <ClInclude Include="robot\functions\osu_query\request.hpp" />
+    <ClInclude Include="robot\functions\weather_forecast.hpp" />
     <ClInclude Include="robot\group_message.hpp" />
     <ClInclude Include="robot\message.hpp" />
     <ClInclude Include="robot\message_sender.hpp" />
     <ClInclude Include="robot\private_message.hpp" />
     <ClInclude Include="robot\robot.h" />
-    <ClInclude Include="robot\stringutil.hpp" />
+    <ClInclude Include="robot\utils\http\httpget.h" />
+    <ClInclude Include="robot\utils\stringutil.h" />
+    <ClInclude Include="robot\utils\stringutil.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="libs\v8\include\v8-debug.h" />
@@ -211,6 +217,8 @@
     </ClCompile>
     <ClCompile Include="QQRobot.cpp" />
     <ClCompile Include="robot\robot.cpp" />
+    <ClCompile Include="robot\utils\http\httpget.cpp" />
+    <ClCompile Include="robot\utils\stringutil.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>

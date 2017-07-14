@@ -1,35 +1,29 @@
 ﻿/*
-功能
+定义了机器人功能抽象
 author: hulang
 */
 #ifndef ROBOT_FUNCTION_H
 #define ROBOT_FUNCTION_H
 
 #include <string>
-#include "../message.hpp"
-#include "../robot.h"
+#include "message.hpp"
+#include "robot.h"
 
 using namespace std;
 using namespace QQRobot;
 
 namespace QQRobot
 {
-    class MessageSender;
     class Robot;
 
-    /*
-    机器人功能抽象
-    */
     class Function
     {
     public:
-        MessageSender *sender;
         Robot *robot;
 
         Function() {}
-        Function(MessageSender *sender, Robot *robot)
+        Function(Robot *robot)
         {
-            this->sender = sender;
             this->robot = robot;
         }
 

@@ -7,7 +7,7 @@ author: hulang
 
 #include <string>
 #include <typeinfo>
-#include "../stringutil.hpp"
+#include "robot/utils/stringutil.h"
 #include "function.hpp"
 #include "interpreters/js.hpp"
 #include "interpreters/scheme.hpp"
@@ -23,7 +23,7 @@ namespace QQRobot
 
     public:
         Interpreter() {}
-        Interpreter(MessageSender *sender, Robot *robot) : Function(sender, robot) {}
+        Interpreter(Robot *robot) : Function(robot) {}
 
         bool handleMessage(Message &fromMsg, Message &toMsg)
         {
@@ -43,7 +43,7 @@ namespace QQRobot
                             ((GroupMessage&)toMsg).setAtQQ(fromMsg.from);
                         robot->blacklist->addQQ(fromMsg.from);
                         toMsg.setContent("你发的是恶意代码，你已经被关进小黑屋了！");
-                        sender->sendMessage(toMsg);
+                        robot->sender->sendMessage(toMsg);
                         return EVENT_BLOCK;
                     }
                     code = toCode(code);
@@ -69,7 +69,7 @@ namespace QQRobot
 
             
             toMsg.setContent(result);
-            sender->sendMessage(toMsg);
+            robot->sender->sendMessage(toMsg);
             return true;
         }
     private:

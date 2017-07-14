@@ -1,12 +1,12 @@
 ﻿/*
-机器人，监听消息事件
+机器人
 author: hulang
 */
 #ifndef ROBOT_H
 #define ROBOT_H
 
 #include <string.h>
-#include "../libs/cqp.h"
+#include "libs/cqp.h"
 #include "message.hpp"
 #include "private_message.hpp"
 #include "group_message.hpp"
@@ -16,9 +16,11 @@ using namespace QQRobot;
 
 namespace QQRobot
 {
+
     class Function;
     class BlackList;
     class OsuQuery;
+    class WeatherForecast;
     class Interpreter;
     class Manual;
 
@@ -28,10 +30,12 @@ namespace QQRobot
         string qq;
         string masterQQ;
 
+        // 功能s
         BlackList *blacklist;
         OsuQuery *osuQuery;
         Interpreter *interpreter;
         Manual *man;
+        WeatherForecast *weatherForecast;
 
         MessageSender *sender;
         

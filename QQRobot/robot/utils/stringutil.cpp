@@ -1,13 +1,4 @@
-#ifndef STRINGUTIL_H
-#define STRINGUTIL_H
-
-#include <string>
-#include <vector>
-#include <wchar.h>
-#include <windows.h>
-
-using namespace std;
-
+#include "stringutil.h"
 namespace stringutil
 {
     string& replace_all(string& str, const string& old_value, const string& new_value)
@@ -22,7 +13,7 @@ namespace stringutil
         return str;
     }
 
-    std::string UTF8_To_string(const std::string & str)
+    string UTF8_To_string(const string & str)
     {
         int nwLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, NULL, 0);
 
@@ -49,7 +40,7 @@ namespace stringutil
         return retStr;
     }
 
-    std::string string_To_UTF8(const std::string & str)
+    string string_To_UTF8(const string & str)
     {
         int nwLen = ::MultiByteToWideChar(CP_ACP, 0, str.c_str(), -1, NULL, 0);
 
@@ -76,17 +67,17 @@ namespace stringutil
         return retStr;
     }
 
-    vector<std::string> split(std::string str, std::string pattern)
+    vector<string> split(string str, string pattern)
     {
         size_t pos;
         std::vector<std::string> result;
         str += pattern;
         size_t size = str.size();
 
-        for (size_t i = 0; i<size; i++)
+        for (size_t i = 0; i < size; i++)
         {
             pos = str.find(pattern, i);
-            if (pos<size)
+            if (pos < size)
             {
                 std::string s = str.substr(i, pos - i);
                 result.push_back(s);
@@ -96,5 +87,3 @@ namespace stringutil
         return result;
     }
 }
-
-#endif

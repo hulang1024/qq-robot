@@ -6,10 +6,9 @@ author: hulang
 #define OSU_QUERY_H
 
 #include <string>
-#include "../../stringutil.hpp"
-#include "../libs/curl/curl.h"  
-#include "../libs/jsoncpp/json.h"
-#include "../function.hpp"
+#include "robot/utils/http/httpget.h"  
+#include "libs/jsoncpp/json.h"
+#include "robot/functions/function.hpp"
 
 using namespace std;
 using namespace QQRobot;
@@ -23,15 +22,7 @@ namespace QQRobot
 
 	public:
         OsuQuery() {}
-        OsuQuery(MessageSender *sender, Robot *robot) : Function(sender, robot)
-        {
-        }
-
-        ~OsuQuery()
-        {
-            curl_easy_cleanup(pCurl);
-            curl_global_cleanup();
-        }
+        OsuQuery(Robot *robot) : Function(robot){ }
 
         bool handleMessage(Message &fromMsg, Message &toMsg)
         {
@@ -80,7 +71,7 @@ namespace QQRobot
             if (result.length() > 0)
             {
                 toMsg.setContent(result);
-                sender->sendMessage(toMsg);
+                robot->sender->sendMessage(toMsg);
                 return true;
             }
             return false;
@@ -88,59 +79,15 @@ namespace QQRobot
 
         string stat(string username, int mode)
         {
-
-            if (!curlInited)
-            {
-                curlInited = true;
-                code = curl_global_init(CURL_GLOBAL_DEFAULT);
-                if (code != CURLE_OK)
-                {
-                    curlInited = false;
-                    pCurl = NULL;
-                    return "init failed";
-                }
-                if (pCurl == NULL)
-                {
-                    pCurl = curl_easy_init();
-                    if(pCurl == NULL)
-                        return "init failed";
-                }
-            }
-
-            string body;
-            string params = "&u=" + username + "&m=" + to_string(mode) + "&type=string";
-            curl_easy_setopt(pCurl, CURLOPT_URL, "https://osu.ppy.sh/api/get_user?k=" + apikey + params);  // 访问的URL  
-            curl_easy_setopt(pCurl, CURLOPT_TIMEOUT, 20);
-            curl_easy_setopt(pCurl, CURLOPT_WRITEFUNCTION, &WriteFunction);
-            curl_easy_setopt(pCurl, CURLOPT_WRITEDATA, &body);
-
-            code = curl_easy_perform(pCurl);
-            if (code != CURLE_OK) {
-                return "";
-            }
-
-            long retCode = 0;
-            code = curl_easy_getinfo(pCurl, CURLINFO_RESPONSE_CODE, &retCode);
-            if (code != CURLE_OK) {
-                return "";
-            }
-            if(retCode != 200)
-                return "Http Return Code " + retCode;
-
-            if (body.length() < 3)
-            {
-                return "未查询到数据";
-            }
-
             Json::Value root;
-            Json::Reader reader;
-
-            bool succeed = reader.parse(body, root);
-            if (!succeed)
-                return "未查询到数据";
+            get.setUrl("https://osu.ppy.sh/api/get_user")
+                .addParam("u", username)
+                .addParam("m", to_string(mode))
+                .addParam("type", "string")
+                .addParam("k", apikey)
+                .performForJSON(root);
 
             Json::Value user = root[0];
-            Json::Value::Members members = user.getMemberNames();
 
             map<string, string> zhchsMap;
             zhchsMap["username"] = "用户名";
@@ -185,19 +132,8 @@ namespace QQRobot
             return resultStr;
         }
 
-    private:
-        CURL *pCurl = NULL;
-        CURLcode code;
-        bool curlInited = false;
-
-        static size_t WriteFunction(void *input, size_t uSize, size_t uCount, void *avg)
-        {
-            size_t uLen = uSize*uCount;
-            string *pStr = (string *)(avg);
-            pStr->append((char *)(input), uLen);
-
-            return uLen;
-        }
+        private:
+            HttpGet get = HttpGet();
     };
 }
 

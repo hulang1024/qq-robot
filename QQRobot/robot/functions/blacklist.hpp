@@ -8,26 +8,26 @@ author: hulang
 #include <string>
 #include <map>
 #include <vector>
-#include "../stringutil.hpp"
+#include "robot/utils/stringutil.h"
 #include "function.hpp"
 
 using namespace std;
 using namespace QQRobot;
-
 namespace QQRobot
 {
+
     class BlackList : public Function
     {
     public:
         BlackList() {}
-        BlackList(MessageSender *sender, Robot *robot) : Function(sender, robot) {}
+        BlackList(Robot *robot) : Function(robot) {}
 
         bool handleMessage(Message &fromMsg, Message &toMsg)
         {
             if (fromMsg.from != robot->masterQQ)
             {
                 toMsg.setContent("无权限");
-                sender->sendMessage(toMsg);
+                robot->sender->sendMessage(toMsg);
                 return true;
             }
             vector<string> strs = stringutil::split(fromMsg.getContent(), " ");
@@ -56,7 +56,7 @@ namespace QQRobot
                 clear();
                 toMsg.setContent("成功清空黑名单");
             }
-            sender->sendMessage(toMsg);
+            robot->sender->sendMessage(toMsg);
             return true;
         }
 
@@ -88,8 +88,7 @@ namespace QQRobot
         string toMutilLineStr(char* indent)
         {
             string str;
-            map<string, bool>::iterator iter;
-            for (iter = mmap.begin(); iter != mmap.end(); iter++)
+            for (map<string, bool>::iterator iter = mmap.begin(); iter != mmap.end(); iter++)
                 str += indent + iter->first + "\n";
             return str;
         }

@@ -23,7 +23,7 @@ Robot robot;
 * 返回应用的ApiVer、Appid，打包后将不会调用
 */
 CQEVENT(const char*, AppInfo, 0)() {
-	return CQAPPINFO;
+    return CQAPPINFO;
 }
 
 
@@ -32,9 +32,9 @@ CQEVENT(const char*, AppInfo, 0)() {
 * 不要在本函数处理其他任何代码，以免发生异常情况。如需执行初始化代码请在Startup事件中执行（Type=1001）。
 */
 CQEVENT(int32_t, Initialize, 4)(int32_t AuthCode) {
-	messageSender.setAuthCode(AuthCode);
+    messageSender.setAuthCode(AuthCode);
     robot.sender = &messageSender;
-	return 0;
+    return 0;
 }
 
 
@@ -44,8 +44,7 @@ CQEVENT(int32_t, Initialize, 4)(int32_t AuthCode) {
 * 如非必要，不建议在这里加载窗口。（可以添加菜单，让用户手动打开窗口）
 */
 CQEVENT(int32_t, __eventStartup, 0)() {
-
-	return 0;
+    return 0;
 }
 
 
@@ -55,7 +54,7 @@ CQEVENT(int32_t, __eventStartup, 0)() {
 * 本函数调用完毕后，酷Q将很快关闭，请不要再通过线程等方式执行其他代码。
 */
 CQEVENT(int32_t, __eventExit, 0)() {
-	return 0;
+    return 0;
 }
 
 /*
@@ -65,8 +64,8 @@ CQEVENT(int32_t, __eventExit, 0)() {
 * 如非必要，不建议在这里加载窗口。（可以添加菜单，让用户手动打开窗口）
 */
 CQEVENT(int32_t, __eventEnable, 0)() {
-	enabled = true;
-	return 0;
+    enabled = true;
+    return 0;
 }
 
 
@@ -77,8 +76,8 @@ CQEVENT(int32_t, __eventEnable, 0)() {
 * 无论本应用是否被启用，酷Q关闭前本函数都*不会*被调用。
 */
 CQEVENT(int32_t, __eventDisable, 0)() {
-	enabled = false;
-	return 0;
+    enabled = false;
+    return 0;
 }
 
 
@@ -98,11 +97,11 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t sendTime, int64
 * Type=2 群消息
 */
 CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t sendTime, int64_t fromGroup, int64_t fromQQ, const char *fromAnonymous, const char *msg, int32_t font) {
-	GroupMessage gpMsg;
-	gpMsg.groupQQ = to_string(fromGroup);
-	gpMsg.from = to_string(fromQQ);
-	gpMsg.setContent(msg);
-	return robot.onGroupMessage(gpMsg);
+    GroupMessage gpMsg;
+    gpMsg.groupQQ = to_string(fromGroup);
+    gpMsg.from = to_string(fromQQ);
+    gpMsg.setContent(msg);
+    return robot.onGroupMessage(gpMsg);
 }
 
 /*
@@ -117,11 +116,11 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t sendTime, int64
 }
 
 CQEVENT(int32_t, __menuA, 0)() {
-	MessageBoxA(NULL, "menuA", "" ,0);
-	return 0;
+    MessageBoxA(NULL, "menuA", "" ,0);
+    return 0;
 }
 
 CQEVENT(int32_t, __menuB, 0)() {
-	MessageBoxA(NULL, "menuB", "" ,0);
-	return 0;
+    MessageBoxA(NULL, "menuB", "" ,0);
+    return 0;
 }

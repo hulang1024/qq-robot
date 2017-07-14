@@ -7,8 +7,8 @@ author: hulang
 
 #include <string>
 #include <map>
+#include "robot/utils/stringutil.h"
 #include "function.hpp"
-#include "../stringutil.hpp"
 
 using namespace std;
 using namespace QQRobot;
@@ -32,7 +32,7 @@ namespace QQRobot
                 + "例如，查询ctb统计信息：!stat WubWoofWolf *c";
             manInfoMap["stat"] = statInfo;
         }
-        Manual(MessageSender *sender, Robot *robot) : Function(sender, robot)
+        Manual(Robot *robot) : Function(robot)
         {
             Manual();
         }
@@ -44,7 +44,7 @@ namespace QQRobot
             {
                 string cmd = strs[1];
                 toMsg.setContent(manInfoMap[cmd]);
-                sender->sendMessage(toMsg);
+                robot->sender->sendMessage(toMsg);
                 return true;
             }
             return false;
