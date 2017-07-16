@@ -23,6 +23,8 @@ namespace QQRobot
     class WeatherForecast;
     class Interpreter;
     class Manual;
+    class BullsAndCows;
+    class Robot;
 
     class Robot
     {
@@ -37,6 +39,7 @@ namespace QQRobot
         Interpreter *interpreter;
         Manual *man;
         WeatherForecast *weatherForecast;
+        BullsAndCows *bullsAndCows;
 
         MessageSender *sender;
         

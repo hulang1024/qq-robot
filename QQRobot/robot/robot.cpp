@@ -9,7 +9,7 @@ author: hulang
 #include "functions/manual.hpp"
 #include "functions/weather_forecast.hpp"
 #include "functions/interpreter.hpp"
-
+#include "functions/games/bullsandcows.hpp"
 using namespace QQRobot;
 
 Robot::Robot()
@@ -23,6 +23,7 @@ Robot::Robot()
     blacklist = new BlackList();
     weatherForecast = new WeatherForecast();
     interpreter = new Interpreter();
+    bullsAndCows = new BullsAndCows();
 }
 
 Robot::Robot(MessageSender *sender)
@@ -38,6 +39,7 @@ Robot::~Robot()
     delete blacklist;
     delete weatherForecast;
     delete interpreter;
+    delete bullsAndCows;
 }
 
 CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage &fromMsg)
@@ -122,26 +124,25 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
     {
         //也AT对方
         toMsg.setAtQQ(fromMsg.from);
-
-        if (fromContent.find("function-list") != string::npos || fromContent.find("功能") != string::npos)
-        {
-            toMsg.setContent("\n" + Function::functionInfo());
-            sender->sendGroupMessage(toMsg);
-            return EVENT_BLOCK;
-        }
-
-        else if (fromContent.find("about") != string::npos || fromContent.find("关于") != string::npos)
-        {
-            string aboutinfo = "\n关于:";
-            aboutinfo += "工程: https://github.com/hlpp/qq-robot/\n";
-            aboutinfo += "开发者们: problue(hlpp) .\n";
-            aboutinfo += code_msg_face(49) + "欢迎加入.\n";
-            toMsg.setContent(aboutinfo);
-            sender->sendGroupMessage(toMsg);
-            return EVENT_BLOCK;
-        }
     }
 
+    if (fromContent.find("function-list") != string::npos || fromContent.find("@功能") != string::npos)
+    {
+        toMsg.setContent("\n" + Function::functionInfo());
+        sender->sendGroupMessage(toMsg);
+        return EVENT_BLOCK;
+    }
+
+    else if (fromContent.find("about") != string::npos || fromContent.find("@关于") != string::npos)
+    {
+        string aboutinfo = "\n关于:\n";
+        aboutinfo += "工程: https://github.com/hlpp/qq-robot/\n";
+        aboutinfo += "开发者们: problue(hlpp) .\n";
+        aboutinfo += code_msg_face(49) + "欢迎加入.\n";
+        toMsg.setContent(aboutinfo);
+        sender->sendGroupMessage(toMsg);
+        return EVENT_BLOCK;
+    }
 
     Function *func = NULL;
 
@@ -155,11 +156,13 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
         func = (Function*)blacklist;
     else if (fromContent.find("天气") != string::npos)
         func = (Function*)weatherForecast;
+    else if (fromContent.find("AB") != string::npos)
+        func = (Function*)bullsAndCows;
     else if (atMe)
     {
         // echo
         string atContent = fromMsg.atContent();
-        toMsg.setContent(atContent.length() > 0 ? atContent : "在下" + nickname + ", 有何贵干？请发送“功能”");
+        toMsg.setContent(atContent.length() > 0 ? atContent : "在下" + nickname + ", 有何贵干？请发送“@功能”");
         sender->sendGroupMessage(toMsg);
         return EVENT_BLOCK;
     }

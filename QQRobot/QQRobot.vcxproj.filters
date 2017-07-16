@@ -168,6 +168,12 @@
     <ClInclude Include="robot\utils\stringutil.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="robot\functions\games\BullsAndCows.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="robot\functions\games\game.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

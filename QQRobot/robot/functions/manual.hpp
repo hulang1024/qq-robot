@@ -15,8 +15,6 @@ using namespace QQRobot;
 
 namespace QQRobot
 {
-    class Robot;
-
     class Manual : public Function
     {
     public:
@@ -42,12 +40,9 @@ namespace QQRobot
             manInfoMap["sendtogroup"] = "sendtogroup 群号 [可选的QQ号] 消息";
             manInfoMap["send"] = "send QQ号 消息";
 
-            manInfoMap["man"] = "命令用法查询: !man <命令名>，例如：!man stat";
-        }
+            manInfoMap["AB"] = "AB [show|restart|end|<猜测答案>]";
 
-        Manual(Robot *robot) : Function(robot)
-        {
-            Manual();
+            manInfoMap["man"] = "命令用法查询: !man <命令名>，例如：!man stat";
         }
 
         handle_message_code handleMessage(Message &fromMsg, Message &toMsg)
@@ -67,7 +62,7 @@ namespace QQRobot
             if (manInfoMap.count(cmd) > 0)
                 return cmd != "man" ? ("命令 " + cmd + " 的用法信息:\n" + manInfoMap[cmd]) : manInfoMap[cmd];
             else
-                return "未找到名为 " + cmd + "的命令的用法信息";
+                return "未找到名为 " + cmd + " 的命令的用法信息";
         }
 
     private:

@@ -175,6 +175,8 @@
     <ClInclude Include="libs\scheme\scm.h" />
     <ClInclude Include="robot\functions\blacklist.hpp" />
     <ClInclude Include="robot\functions\function.hpp" />
+    <ClInclude Include="robot\functions\games\BullsAndCows.hpp" />
+    <ClInclude Include="robot\functions\games\game.h" />
     <ClInclude Include="robot\functions\interpreter.hpp" />
     <ClInclude Include="robot\functions\interpreters\js.hpp" />
     <ClInclude Include="robot\functions\interpreters\scheme.hpp" />

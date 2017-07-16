@@ -23,7 +23,6 @@ namespace QQRobot
 
     public:
         WeatherForecast() {}
-        WeatherForecast(Robot *robot) : Function(robot){ }
 
         handle_message_code handleMessage(Message &fromMsg, Message &toMsg)
         {

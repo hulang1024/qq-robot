@@ -20,7 +20,6 @@ namespace QQRobot
     {
     public:
         BlackList() {}
-        BlackList(Robot *robot) : Function(robot) {}
 
         handle_message_code handleMessage(Message &fromMsg, Message &toMsg)
         {

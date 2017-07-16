@@ -1,5 +1,5 @@
 ﻿/*
-定义了机器人功能抽象
+机器人功能抽象
 author: hulang
 */
 #ifndef ROBOT_FUNCTION_H
@@ -14,8 +14,6 @@ using namespace QQRobot;
 
 namespace QQRobot
 {
-    class Robot;
-
     class Function
     {
     public:
@@ -28,10 +26,6 @@ namespace QQRobot
         Robot *robot;
 
         Function() {}
-        Function(Robot *robot)
-        {
-            this->robot = robot;
-        }
 
         virtual handle_message_code handleMessage(Message &fromMsg, Message &toMsg) = 0;
 
@@ -43,10 +37,12 @@ namespace QQRobot
             info += "* 天气预报：天气\n";
             info += "* osu!查询：!stat\n";
             info += "* 黑名单：black\n";
-            info += "* 代发消息：send\n";
-            info += "* 代发消息到群：sendtogroup\n";
+            //info += "* 代发消息：send\n";
+            //info += "* 代发消息到群：sendtogroup\n";
             info += "* 命令用法查询：!man <命令名>，例如：!man eval\n";
+            info += "* 游戏 - Bulls and Cows猜数字：AB\n";
             info += "* 关于：about\n";
+            info += "* 功能：function-list\n";
             return info;
         }
     };

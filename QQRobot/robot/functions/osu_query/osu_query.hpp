@@ -22,7 +22,6 @@ namespace QQRobot
 
     public:
         OsuQuery() {}
-        OsuQuery(Robot *robot) : Function(robot){ }
 
         handle_message_code handleMessage(Message &fromMsg, Message &toMsg)
         {
