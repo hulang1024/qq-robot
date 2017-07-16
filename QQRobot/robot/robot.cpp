@@ -154,7 +154,7 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
     else if (fromContent.find("eval:") != string::npos)
         func = (Function*)solts["interpreter"];
     else if (fromContent.find("black") != string::npos)
-        func = (Function*)solts["blacklist"];
+        func = (Function*)solts["black"];
     else if (fromContent.find("天气") != string::npos)
         func = (Function*)solts["weatherForecast"];
     else if (fromContent.find("AB") != string::npos) {
