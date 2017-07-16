@@ -11,4 +11,4 @@
 * 命令查询
 * 机器人接收到的私聊消息自动转发给管理者
 * 游戏  
-  1. Bulls and Cows猜数字：AB
+  1. Bulls and Cows猜数字

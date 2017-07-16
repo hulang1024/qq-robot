@@ -1,5 +1,5 @@
-/*
-��Ϸ
+﻿/*
+游戏
 author: hulang
 */
 #ifndef ROBOT_GAME_H
