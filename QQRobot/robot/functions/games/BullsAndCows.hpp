@@ -17,7 +17,7 @@ namespace QQRobot {
     public:
         handle_message_code handleMessage(Message &fromMsg, Message &toMsg) {
             string output;
-            vector<string> strs = stringutil::split(fromMsg.getContent(), " ");
+            vector<string> args = stringutil::split(fromMsg.getContent(), " ");
 
             LOOP:
             switch (gameState) {
@@ -26,23 +26,23 @@ namespace QQRobot {
                 genRandQuestion();
 
                 output = "我已经想出了一个无重复的四位数字，请开始猜吧~";
-                if (strs.size() > 1 && strs[1] == "show")
+                if (args.size() > 1 && args[1] == "show")
                     output += "\n偷偷告诉你，数字是 " + string(answer);
                 gameState = GameState::playing;
                 break;
             case started:
             case playing:
-                if (strs.size() > 1) {
-                    if (strs[1] == "restart") {
+                if (args.size() > 1) {
+                    if (args[1] == "restart") {
                         gameState = GameState::unstarted;
                         goto LOOP;
                     }
-                    else if (strs[1] == "end") {
+                    else if (args[1] == "end") {
                         gameState = GameState::ended;
                         output = "已结束";
                     }
                     else {
-                        string input = strs[1];
+                        string input = args[1];
                         if (input.length() != ANSWER_N) {
                             output = "答案位数不对";
                             break;
