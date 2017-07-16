@@ -136,7 +136,7 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
 
     else if (fromContent.find("about") != string::npos || fromContent.find("@关于") != string::npos)
     {
-        string aboutinfo = "\n关于:\n";
+        string aboutinfo = "关于\n";
         aboutinfo += "工程: https://github.com/hlpp/qq-robot/\n";
         aboutinfo += "开发者们: problue(hlpp) .\n";
         aboutinfo += code_msg_face(49) + "欢迎加入.\n";

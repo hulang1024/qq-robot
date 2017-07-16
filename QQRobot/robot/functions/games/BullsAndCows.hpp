@@ -40,7 +40,7 @@ namespace QQRobot {
                         output = "本次游戏已结束";
                     }
                     else if (args[1] == "show") {
-                        output = "偷偷告诉你，数字是 " + string(answer);
+                        output = "偷偷告诉你，答案是 " + string(answer);
                     }
                     else {
                         string input = args[1];
