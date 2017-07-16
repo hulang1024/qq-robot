@@ -40,7 +40,7 @@ namespace QQRobot
                     {
                         if(typeid(fromMsg) == typeid(GroupMessage))
                             ((GroupMessage&)toMsg).setAtQQ(fromMsg.from);
-                        robot->blacklist->addQQ(fromMsg.from);
+                        ((BlackList*)robot->solts["black"])->addQQ(fromMsg.from);
                         toMsg.setContent("你发的是恶意代码，你已经被关进小黑屋了！");
                         robot->sender->sendMessage(toMsg);
                         return handle_message_code::block;

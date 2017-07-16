@@ -10,36 +10,37 @@ author: hulang
 #include "functions/weather_forecast.hpp"
 #include "functions/interpreter.hpp"
 #include "functions/games/bullsandcows.hpp"
+
 using namespace QQRobot;
 
 Robot::Robot()
 {
+    //if(initance == NULL)
     nickname = "超蓝猫";
     qq = "3381775672";
     masterQQ = "1013644379";
 
-    man = new Manual();
-    osuQuery = new OsuQuery();
-    blacklist = new BlackList();
-    weatherForecast = new WeatherForecast();
-    interpreter = new Interpreter();
-    bullsAndCows = new BullsAndCows();
-}
-
-Robot::Robot(MessageSender *sender)
-{
-    Robot();
-    this->sender = sender;
+    solts["man"] = new Manual();
+    solts["osuQuery"] = new OsuQuery();
+    solts["black"] = new BlackList();
+    solts["weatherForecast"] = new WeatherForecast();
+    solts["interpreter"] = new Interpreter();
 }
 
 Robot::~Robot()
 {
-    delete man;
-    delete osuQuery;
-    delete blacklist;
-    delete weatherForecast;
-    delete interpreter;
-    delete bullsAndCows;
+    for (map<string, void*>::iterator iter = solts.begin(); iter != solts.end(); iter++)
+        delete iter->second;
+}
+
+static Robot *robotInstance = NULL;
+
+Robot* Robot::initance()
+{
+    if (robotInstance == NULL) {
+        robotInstance = new Robot();
+    }
+    return robotInstance;
 }
 
 CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage &fromMsg)
@@ -94,7 +95,7 @@ CQ_EVENT_RET Robot::onPrivateMessage(PrivateMessage &fromMsg)
         sender->sendPrivateMessage(toMsg);
     }
     else if (fromContent.find("black") != string::npos)
-        func = (Function*)blacklist;
+        func = (Function*)solts["black"];
 
     if (func != NULL)
     {
@@ -147,17 +148,23 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
     Function *func = NULL;
 
     if (fromContent.find("!man") != string::npos)
-        func = (Function*)man;
+        func = (Function*)solts["man"];
     else if (fromContent.find("!stat") != string::npos)
-        func = (Function*)osuQuery;
+        func = (Function*)solts["osuQuery"];
     else if (fromContent.find("eval:") != string::npos)
-        func = (Function*)interpreter;
+        func = (Function*)solts["interpreter"];
     else if (fromContent.find("black") != string::npos)
-        func = (Function*)blacklist;
+        func = (Function*)solts["blacklist"];
     else if (fromContent.find("天气") != string::npos)
-        func = (Function*)weatherForecast;
-    else if (fromContent.find("AB") != string::npos)
-        func = (Function*)bullsAndCows;
+        func = (Function*)solts["weatherForecast"];
+    else if (fromContent.find("AB") != string::npos) {
+        string soltKey = "groupQQ_" + fromMsg.groupQQ + "_AB";
+        func = (Function*)solts[soltKey];
+        if (func == NULL) {
+            func = new BullsAndCows();
+            solts[soltKey] = func;
+        }
+    }
     else if (atMe)
     {
         // echo
@@ -169,16 +176,30 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
 
     if (func != NULL)
     {
-        if (checkIsInBlackList(fromMsg, toMsg))
+        BlackList *black = (BlackList*)solts["black"];
+        if (black->exist(fromMsg.from) || black->exist("all"))
+        {
+            toMsg.setAtQQ(fromMsg.from);
+            toMsg.setContent("你已经被关进小黑屋了:C");
+            sender->sendGroupMessage(toMsg);
             return EVENT_BLOCK;
+        }
+
         func->robot = this;
-        Function::handle_message_code retCode = func->handleMessage(fromMsg, toMsg);
+        Function::handle_message_code retCode;
+        try
+        {
+            retCode = func->handleMessage(fromMsg, toMsg);
+        }
+        catch (exception &e) {
+
+        }
         switch (retCode)
         {
         case Function::handle_message_code::block:
             return EVENT_BLOCK;
         case Function::handle_message_code::syntax_error:
-            toMsg.setContent(man->getInfo("man"));
+            toMsg.setContent(((Manual*)solts["man"])->getInfo("man"));
             sender->sendMessage(toMsg);
             sender->sendGroupMessage(toMsg);
         }
@@ -191,16 +212,4 @@ CQ_EVENT_RET Robot::onDiscussMessage(GroupMessage &fromMsg)
 {
     fromMsg.type = 1;
     return onGroupMessage(fromMsg);
-}
-
-bool Robot::checkIsInBlackList(GroupMessage &fromMsg, GroupMessage &toMsg)
-{
-    if (blacklist->exist(fromMsg.from) || blacklist->exist("all"))
-    {
-        toMsg.setAtQQ(fromMsg.from);
-        toMsg.setContent("你已经被关进小黑屋了:C");
-        sender->sendGroupMessage(toMsg);
-        return true;
-    }
-    return false;
 }

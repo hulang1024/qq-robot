@@ -24,22 +24,23 @@ namespace QQRobot {
             case unstarted:
             case ended:
                 genRandQuestion();
-
+                times = 0;
                 output = "我已经想出了一个无重复的四位数字，请开始猜吧~";
-                if (args.size() > 1 && args[1] == "show")
-                    output += "\n偷偷告诉你，数字是 " + string(answer);
-                gameState = GameState::playing;
+                gameState = playing;
                 break;
             case started:
             case playing:
                 if (args.size() > 1) {
                     if (args[1] == "restart") {
-                        gameState = GameState::unstarted;
+                        gameState = unstarted;
                         goto LOOP;
                     }
                     else if (args[1] == "end") {
-                        gameState = GameState::ended;
-                        output = "已结束";
+                        gameState = ended;
+                        output = "本次游戏已结束";
+                    }
+                    else if (args[1] == "show") {
+                        output = "偷偷告诉你，数字是 " + string(answer);
                     }
                     else {
                         string input = args[1];
@@ -48,10 +49,12 @@ namespace QQRobot {
                             break;
                         }
 
+                        times++;
                         output = feedback(input);
                         if (output == "4A0B") {
-                            output += "\n" + code_msg_at(fromMsg.from) + "恭喜你，猜对了！";
-                            gameState = GameState::ended;
+                            output += "\n" + code_msg_at(fromMsg.from)
+                                   + "\n恭喜你，猜对了！用了" + to_string(times) + "次。";
+                            gameState = ended;
                         }
                     }
                 }
@@ -67,10 +70,10 @@ namespace QQRobot {
             return handle_message_code::block;
         }
 
-
     private:
         static const size_t ANSWER_N = 4;
         char answer[ANSWER_N + 1] = {0};
+        int times;
 
         void genRandQuestion() {
             srand(time(NULL));
@@ -86,8 +89,8 @@ namespace QQRobot {
         }
 
         string feedback(string input) {
-            int A = 0;//位置正确的数的个数
-            int B = 0;//数字正确而位置不对的数的个数
+            int A = 0; //位置正确的数的个数
+            int B = 0; //数字正确而位置不对的数的个数
 
             for (size_t ai = 0; ai < ANSWER_N; ai++) {
                 if (answer[ai] == input[ai])

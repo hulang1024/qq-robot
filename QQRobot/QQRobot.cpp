@@ -17,11 +17,9 @@ using namespace QQRobot;
 bool enabled = false;
 
 MessageSender messageSender;
-Robot robot;
+Robot *robot = Robot::initance();
 
-/* 
-* 返回应用的ApiVer、Appid，打包后将不会调用
-*/
+
 CQEVENT(const char*, AppInfo, 0)() {
     return CQAPPINFO;
 }
@@ -33,7 +31,7 @@ CQEVENT(const char*, AppInfo, 0)() {
 */
 CQEVENT(int32_t, Initialize, 4)(int32_t AuthCode) {
     messageSender.setAuthCode(AuthCode);
-    robot.sender = &messageSender;
+    robot->sender = &messageSender;
     return 0;
 }
 
@@ -89,7 +87,8 @@ CQEVENT(int32_t, __eventPrivateMsg, 24)(int32_t subType, int32_t sendTime, int64
     PrivateMessage pMsg;
     pMsg.from = to_string(fromQQ);
     pMsg.setContent(msg);
-    return robot.onPrivateMessage(pMsg);
+    pMsg.subType = (MessageSubType)subType;
+    return robot->onPrivateMessage(pMsg);
 }
 
 
@@ -101,7 +100,7 @@ CQEVENT(int32_t, __eventGroupMsg, 36)(int32_t subType, int32_t sendTime, int64_t
     gpMsg.groupQQ = to_string(fromGroup);
     gpMsg.from = to_string(fromQQ);
     gpMsg.setContent(msg);
-    return robot.onGroupMessage(gpMsg);
+    return robot->onGroupMessage(gpMsg);
 }
 
 /*
@@ -112,15 +111,5 @@ CQEVENT(int32_t, __eventDiscussMsg, 32)(int32_t subType, int32_t sendTime, int64
     gpMsg.groupQQ = to_string(fromDiscuss);
     gpMsg.from = to_string(fromQQ);
     gpMsg.setContent(msg);
-    return robot.onDiscussMessage(gpMsg);
-}
-
-CQEVENT(int32_t, __menuA, 0)() {
-    MessageBoxA(NULL, "menuA", "" ,0);
-    return 0;
-}
-
-CQEVENT(int32_t, __menuB, 0)() {
-    MessageBoxA(NULL, "menuB", "" ,0);
-    return 0;
+    return robot->onDiscussMessage(gpMsg);
 }

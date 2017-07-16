@@ -17,12 +17,15 @@ namespace QQRobot
     class Function
     {
     public:
-        static enum handle_message_code {
+        enum handle_message_code {
             syntax_error,
             block,
             ignore
         };
 
+        /*
+        机器人的状态是所有功能共享的
+        */
         Robot *robot;
 
         Function() {}
