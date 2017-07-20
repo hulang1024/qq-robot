@@ -129,7 +129,7 @@ CQ_EVENT_RET Robot::onGroupMessage(GroupMessage &fromMsg)
 
     if (fromContent.find("function-list") != string::npos || fromContent.find("@功能") != string::npos)
     {
-        toMsg.setContent("\n" + Function::functionInfo());
+        toMsg.setContent((atMe ? "\n" : "") + Function::functionInfo());
         sender->sendGroupMessage(toMsg);
         return EVENT_BLOCK;
     }
