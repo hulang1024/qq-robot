@@ -12,3 +12,7 @@
 * 机器人接收到的私聊消息自动转发给管理者
 * 游戏  
   1. Bulls and Cows猜数字
+  
+### 截图
+![功能列表](Documentation/ss/fun.png)  
+![部分功能测试](Documentation/ss/funtests.png)
