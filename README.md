@@ -1,7 +1,7 @@
 ﻿# qq-robot
 基于CQ的多功能QQ聊天机器人。
 
-### 支持:
+### 支持
 * 回复at
 * 执行JS程序
 * 天气预报
@@ -15,4 +15,9 @@
   
 ### 截图
 ![功能列表](Documentation/ss/fun.png)  
-![部分功能测试](Documentation/ss/funtests.png)
+![eval测试](Documentation/ss/eval_test.png)  
+![black测试](Documentation/ss/black_test.png)  
+![weather测试](Documentation/ss/weather_test.png)  
+![AB测试](Documentation/ss/AB_test.png)  
+![stat测试](Documentation/ss/stat_test.png)  
+![man测试](Documentation/ss/man_test.png)  
