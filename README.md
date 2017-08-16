@@ -1,8 +1,8 @@
 ﻿# qq-robot
-基于CQ的多功能QQ聊天机器人。
+简单的多功能QQ聊天机器人。
 
-### 支持
-* 回复at
+## 支持
+* 回复@
 * 执行JS程序
 * 天气预报
 * osu!查询
@@ -12,8 +12,13 @@
 * 机器人接收到的私聊消息自动转发给管理者
 * 游戏  
   1. Bulls and Cows猜数字
-  
-### 截图
+
+
+## Contributing
+### 类图
+![](Documentation/imgs/ClassDiagram.png)  
+
+## 截图
 ![功能列表](Documentation/ss/fun.png)  
 ![eval测试](Documentation/ss/eval_test.png)  
 ![black测试](Documentation/ss/black_test.png)  

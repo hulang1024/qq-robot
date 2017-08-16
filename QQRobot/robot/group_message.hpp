@@ -17,7 +17,6 @@ namespace QQRobot
     {
     public:
         string groupQQ;
-        string atQQ = "";
         int type = 0; // 0=群，1=讨论组
 
         string getContent()
@@ -76,6 +75,8 @@ namespace QQRobot
             }
             return content;
         }
+    private:
+        string atQQ = "";
     };
 }
 
